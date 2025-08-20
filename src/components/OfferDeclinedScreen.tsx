@@ -128,6 +128,19 @@ export default function OfferDeclinedScreen({
                 <h2 className="text-lg sm:text-xl font-bold text-gray-800">
                   Help us understand how you were using Migrate Mate.
                 </h2>
+                
+                {/* Progress indicator for questions */}
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs sm:text-sm text-gray-500">
+                    {Object.values(formData).filter(value => value !== '').length} of 3 questions answered
+                  </span>
+                  <div className="flex-1 bg-gray-200 rounded-full h-2">
+                    <div 
+                      className="bg-[#996EFF] h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${(Object.values(formData).filter(value => value !== '').length / 3) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
               </div>
 
               {/* Question 1: Roles Applied */}
@@ -202,6 +215,18 @@ export default function OfferDeclinedScreen({
                 </div>
               </div>
 
+              {/* Helpful hint text */}
+              <div className={`text-center transition-all duration-500 delay-550 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
+                <p className="text-xs sm:text-sm text-gray-500">
+                  {isFormValid 
+                    ? '✅ All questions answered! You can now continue.' 
+                    : 'Please answer all questions above to continue'
+                  }
+                </p>
+              </div>
+
               {/* Action Buttons with responsive sizing */}
               <div className={`space-y-3 pt-2 sm:pt-3 transition-all duration-500 delay-600 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
@@ -214,10 +239,15 @@ export default function OfferDeclinedScreen({
                   Get 50% off | $12.50 <span className="line-through">$25</span>
                 </button>
 
-                {/* Red Button: Continue */}
+                {/* Red Button: Continue - Disabled until all questions answered */}
                 <button
                   onClick={onContinue}
-                  className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-red-600 text-white rounded-lg font-medium transition-all duration-300 hover:bg-red-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base"
+                  disabled={!isFormValid}
+                  className={`w-full py-3 sm:py-4 px-4 sm:px-6 rounded-lg font-medium transition-all duration-300 text-sm sm:text-base ${
+                    isFormValid
+                      ? 'bg-red-600 text-white hover:bg-red-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]'
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
                 >
                   Continue
                 </button>
@@ -238,6 +268,19 @@ export default function OfferDeclinedScreen({
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-800">
                   Help us understand how you were using Migrate Mate.
                 </h2>
+                
+                {/* Progress indicator for questions */}
+                <div className="flex items-center space-x-3">
+                  <span className="text-sm text-gray-500">
+                    {Object.values(formData).filter(value => value !== '').length} of 3 questions answered
+                  </span>
+                  <div className="flex-1 bg-gray-200 rounded-full h-2.5">
+                    <div 
+                      className="bg-[#996EFF] h-2.5 rounded-full transition-all duration-300"
+                      style={{ width: `${(Object.values(formData).filter(value => value !== '').length / 3) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
               </div>
 
               {/* Question 1: Roles Applied */}
@@ -312,6 +355,18 @@ export default function OfferDeclinedScreen({
                 </div>
               </div>
 
+              {/* Helpful hint text */}
+              <div className={`text-center transition-all duration-500 delay-550 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
+                <p className="text-sm text-gray-500">
+                  {isFormValid 
+                    ? '✅ All questions answered! You can now continue.' 
+                    : 'Please answer all questions above to continue'
+                  }
+                </p>
+              </div>
+
               {/* Action Buttons with enhanced hover effects */}
               <div className={`space-y-4 pt-4 transition-all duration-500 delay-600 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
@@ -324,10 +379,15 @@ export default function OfferDeclinedScreen({
                   Get 50% off | $12.50 <span className="line-through">$25</span>
                 </button>
 
-                {/* Red Button: Continue */}
+                {/* Red Button: Continue - Disabled until all questions answered */}
                 <button
                   onClick={onContinue}
-                  className="w-full py-4 px-6 bg-red-600 text-white rounded-lg font-medium transition-all duration-300 hover:bg-red-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
+                  disabled={!isFormValid}
+                  className={`w-full py-4 px-6 rounded-lg font-medium transition-all duration-300 text-sm sm:text-base ${
+                    isFormValid
+                      ? 'bg-red-600 text-white hover:bg-red-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]'
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
                 >
                   Continue
                 </button>

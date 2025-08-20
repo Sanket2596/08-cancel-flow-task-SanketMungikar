@@ -8,6 +8,7 @@ import VisaScreen from '../components/VisaScreen';
 import DownsellScreen from '../components/DownsellScreen';
 import OfferAcceptedScreen from '../components/OfferAcceptedScreen';
 import OfferDeclinedScreen from '../components/OfferDeclinedScreen';
+import DiscountAcceptedScreen from '../components/DiscountAcceptedScreen';
 import { useABTest } from '../hooks/useABTest';
 
 // Mock user data for UI display
@@ -33,8 +34,8 @@ export default function ProfilePage() {
   const [loading] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [showCancellationModal, setShowCancellationModal] = useState(false);
-  const [currentScreen, setCurrentScreen] = useState<'initial' | 'job-found' | 'feedback' | 'visa' | 'downsell' | 'offer-accepted' | 'offer-declined'>('initial');
-  const [previousScreen, setPreviousScreen] = useState<'initial' | 'job-found' | 'feedback' | 'visa' | 'downsell' | 'offer-accepted' | 'offer-declined'>('initial');
+  const [currentScreen, setCurrentScreen] = useState<'initial' | 'job-found' | 'feedback' | 'visa' | 'downsell' | 'offer-accepted' | 'offer-declined' | 'discount-accepted'>('initial');
+  const [previousScreen, setPreviousScreen] = useState<'initial' | 'job-found' | 'feedback' | 'visa' | 'downsell' | 'offer-accepted' | 'offer-declined' | 'discount-accepted'>('initial');
   
   // New state for settings toggle
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
@@ -131,8 +132,15 @@ export default function ProfilePage() {
   };
 
   const handleBackToInitial = () => {
-    setPreviousScreen(currentScreen);
-    setCurrentScreen('initial');
+    // If we're on the offer-declined screen, go back to downsell screen
+    if (currentScreen === 'offer-declined') {
+      setPreviousScreen(currentScreen);
+      setCurrentScreen('downsell');
+    } else {
+      // For other screens, go back to initial
+      setPreviousScreen(currentScreen);
+      setCurrentScreen('initial');
+    }
   };
 
   const handleBackToJobFound = () => {
@@ -143,6 +151,12 @@ export default function ProfilePage() {
   const handleBackToFeedback = () => {
     setPreviousScreen(currentScreen);
     setCurrentScreen('feedback');
+  };
+
+  const handleBackToDownsell = () => {
+    // Go back to downsell screen from offer-declined
+    setPreviousScreen(currentScreen);
+    setCurrentScreen('downsell');
   };
 
   const handleCloseModal = () => {
@@ -200,6 +214,8 @@ export default function ProfilePage() {
       setCurrentScreen('offer-accepted');
     } else if (previousScreen === 'offer-declined') {
       setCurrentScreen('offer-declined');
+    } else if (previousScreen === 'discount-accepted') {
+      setCurrentScreen('discount-accepted');
     } else {
       // Fallback to initial
       setCurrentScreen('initial');
@@ -222,8 +238,17 @@ export default function ProfilePage() {
   // Handler for when user continues from offer declined screen
   const handleOfferDeclinedContinue = () => {
     console.log('User continued from offer declined screen');
-    // TODO: Handle the continuation logic
-    setShowCancellationModal(false);
+    // Show the discount accepted screen
+    setPreviousScreen(currentScreen);
+    setCurrentScreen('discount-accepted');
+  };
+
+  // Handler for when user clicks "Land your dream role" from discount accepted screen
+  const handleLandDreamRole = () => {
+    console.log('User clicked Land your dream role, going to main Yes/No screen');
+    // Go back to the main initial modal (Yes/No screen)
+    setPreviousScreen(currentScreen);
+    setCurrentScreen('initial');
   };
 
   if (loading) {
@@ -503,8 +528,16 @@ export default function ProfilePage() {
       {showCancellationModal && currentScreen === 'offer-declined' && (
         <OfferDeclinedScreen
           onClose={handleCloseModal}
-          onBack={handleBackToInitial}
+          onBack={handleBackToDownsell}
           onContinue={handleOfferDeclinedContinue}
+        />
+      )}
+
+      {showCancellationModal && currentScreen === 'discount-accepted' && (
+        <DiscountAcceptedScreen
+          onClose={handleCloseModal}
+          onBack={handleBackToInitial}
+          onLandDreamRole={handleLandDreamRole}
         />
       )}
 
@@ -534,6 +567,12 @@ export default function ProfilePage() {
               className="bg-orange-500 text-white px-2 py-1 rounded text-xs"
             >
               Test Offer Declined
+            </button>
+            <button 
+              onClick={() => setCurrentScreen('discount-accepted')}
+              className="bg-purple-500 text-white px-2 py-1 rounded text-xs"
+            >
+              Test Discount Accepted
             </button>
           </div>
         </div>
