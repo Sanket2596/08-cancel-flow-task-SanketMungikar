@@ -1,10 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CancellationModal from '../components/CancellationModal';
 import JobFoundScreen from '../components/JobFoundScreen';
 import FeedbackScreen from '../components/FeedbackScreen';
 import VisaScreen from '../components/VisaScreen';
+import DownsellScreen from '../components/DownsellScreen';
+import OfferAcceptedScreen from '../components/OfferAcceptedScreen';
+import OfferDeclinedScreen from '../components/OfferDeclinedScreen';
+import { useABTest } from '../hooks/useABTest';
 
 // Mock user data for UI display
 const mockUser = {
@@ -29,10 +33,30 @@ export default function ProfilePage() {
   const [loading] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [showCancellationModal, setShowCancellationModal] = useState(false);
-  const [currentScreen, setCurrentScreen] = useState<'initial' | 'job-found' | 'feedback' | 'visa'>('initial');
+  const [currentScreen, setCurrentScreen] = useState<'initial' | 'job-found' | 'feedback' | 'visa' | 'downsell' | 'offer-accepted' | 'offer-declined'>('initial');
+  const [previousScreen, setPreviousScreen] = useState<'initial' | 'job-found' | 'feedback' | 'visa' | 'downsell' | 'offer-accepted' | 'offer-declined'>('initial');
   
   // New state for settings toggle
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
+
+  // A/B Testing for downsell screen
+  const { variant: downsellVariant, isLoading: isABTestLoading } = useABTest({
+    userId: mockUser.id,
+    testName: 'downsell_offer',
+    variantA: 'show_downsell',
+    variantB: 'skip_downsell'
+  });
+
+  // Debug useEffect to monitor state changes
+  useEffect(() => {
+    console.log('=== State Change Detected ===');
+    console.log('showCancellationModal:', showCancellationModal);
+    console.log('currentScreen:', currentScreen);
+    console.log('previousScreen:', previousScreen);
+    console.log('downsellVariant:', downsellVariant);
+    console.log('isABTestLoading:', isABTestLoading);
+    console.log('===========================');
+  }, [showCancellationModal, currentScreen, previousScreen, downsellVariant, isABTestLoading]);
 
   const handleSignOut = async () => {
     setIsSigningOut(true);
@@ -48,50 +72,157 @@ export default function ProfilePage() {
   };
 
   const handleCancelClick = () => {
+    console.log('=== handleCancelClick called ===');
     setShowCancellationModal(true);
     setCurrentScreen('initial');
+    setPreviousScreen('initial');
+    
+    // Log A/B test information for debugging
+    if (!isABTestLoading) {
+      console.log(`A/B Test Result: User will see ${downsellVariant === 'show_downsell' ? 'downsell screen' : 'skip downsell'}`);
+    } else {
+      console.log('A/B Test still loading...');
+    }
+    console.log('=== handleCancelClick completed ===');
   };
 
   const handleJobFound = () => {
+    setPreviousScreen(currentScreen);
     setCurrentScreen('job-found');
   };
 
   const handleStillLooking = () => {
-    // TODO: Implement A/B test variant B logic  
-    console.log('User still looking - show variant B');
-    setShowCancellationModal(false);
+    console.log('handleStillLooking called');
+    console.log('A/B Test Loading:', isABTestLoading);
+    console.log('Downsell Variant:', downsellVariant);
+    console.log('Current screen before:', currentScreen);
+    
+    // TEMPORARY: Always show downsell for testing
+    console.log('TEMPORARY: Always showing downsell screen for testing');
+    setPreviousScreen(currentScreen);
+    setCurrentScreen('downsell');
+    console.log('Screen set to: downsell');
+    
+    // ORIGINAL A/B TESTING LOGIC (commented out for testing)
+    /*
+    // Wait for A/B test to complete before proceeding
+    if (isABTestLoading) {
+      console.log('A/B test still loading...');
+      return;
+    }
+    
+    console.log(`Current screen: ${currentScreen}, Previous screen: ${previousScreen}`);
+    
+    // A/B Testing: Show downsell to 50% of users, skip for 50%
+    if (downsellVariant === 'show_downsell') {
+      // Variant A: Show downsell screen
+      console.log('A/B Test: Showing downsell screen (Variant A)');
+      setPreviousScreen(currentScreen);
+      setCurrentScreen('downsell');
+    } else {
+      // Variant B: Skip downsell and go directly to feedback
+      console.log('A/B Test: Skipping downsell, going to feedback (Variant B)');
+      setPreviousScreen(currentScreen);
+      setCurrentScreen('feedback');
+    }
+    
+    console.log('Screen set to:', downsellVariant === 'show_downsell' ? 'downsell' : 'feedback');
+    */
   };
 
   const handleBackToInitial = () => {
+    setPreviousScreen(currentScreen);
     setCurrentScreen('initial');
   };
 
   const handleBackToJobFound = () => {
+    setPreviousScreen(currentScreen);
     setCurrentScreen('job-found');
   };
 
   const handleBackToFeedback = () => {
+    setPreviousScreen(currentScreen);
     setCurrentScreen('feedback');
   };
 
   const handleCloseModal = () => {
     setShowCancellationModal(false);
     setCurrentScreen('initial');
+    setPreviousScreen('initial');
   };
 
   const handleJobFoundContinue = () => {
     // Move to feedback screen
+    setPreviousScreen(currentScreen);
     setCurrentScreen('feedback');
   };
 
   const handleFeedbackContinue = () => {
     // Move to visa screen
+    setPreviousScreen(currentScreen);
     setCurrentScreen('visa');
   };
 
   const handleVisaComplete = () => {
     // TODO: Handle the final step in the cancellation flow
     console.log('Visa question completed, finalizing cancellation');
+    setShowCancellationModal(false);
+  };
+
+  const handleAcceptDownsell = () => {
+    // User accepted the 50% off offer
+    console.log('User accepted downsell offer');
+    // Show the offer accepted screen
+    setPreviousScreen(currentScreen);
+    setCurrentScreen('offer-accepted');
+  };
+
+  const handleDeclineDownsell = () => {
+    // User declined the downsell offer, show offer declined screen
+    console.log('User declined downsell offer');
+    setPreviousScreen(currentScreen);
+    setCurrentScreen('offer-declined');
+  };
+
+  const handleSmartBack = () => {
+    // Smart back button that knows where to go based on previous screen
+    if (previousScreen === 'initial') {
+      setCurrentScreen('initial');
+    } else if (previousScreen === 'job-found') {
+      setCurrentScreen('job-found');
+    } else if (previousScreen === 'feedback') {
+      setCurrentScreen('feedback');
+    } else if (previousScreen === 'visa') {
+      setCurrentScreen('visa');
+    } else if (previousScreen === 'downsell') {
+      setCurrentScreen('downsell');
+    } else if (previousScreen === 'offer-accepted') {
+      setCurrentScreen('offer-accepted');
+    } else if (previousScreen === 'offer-declined') {
+      setCurrentScreen('offer-declined');
+    } else {
+      // Fallback to initial
+      setCurrentScreen('initial');
+    }
+  };
+
+  // Temporary test function to manually show downsell
+  const testDownsell = () => {
+    console.log('Testing downsell screen manually');
+    setCurrentScreen('downsell');
+  };
+
+  // Handler for when user continues from offer accepted screen
+  const handleOfferAcceptedContinue = () => {
+    console.log('User continued from offer accepted screen');
+    // TODO: Handle the continuation logic
+    setShowCancellationModal(false);
+  };
+
+  // Handler for when user continues from offer declined screen
+  const handleOfferDeclinedContinue = () => {
+    console.log('User continued from offer declined screen');
+    // TODO: Handle the continuation logic
     setShowCancellationModal(false);
   };
 
@@ -339,7 +470,7 @@ export default function ProfilePage() {
       {showCancellationModal && currentScreen === 'feedback' && (
         <FeedbackScreen
           onClose={handleCloseModal}
-          onBack={handleBackToJobFound}
+          onBack={previousScreen === 'downsell' ? handleBackToInitial : handleBackToJobFound}
           onContinue={handleFeedbackContinue}
         />
       )}
@@ -350,6 +481,62 @@ export default function ProfilePage() {
           onBack={handleBackToFeedback}
           onComplete={handleVisaComplete}
         />
+      )}
+
+      {showCancellationModal && currentScreen === 'downsell' && (
+        <DownsellScreen
+          onClose={handleCloseModal}
+          onBack={handleBackToInitial}
+          onAcceptDownsell={handleAcceptDownsell}
+          onDeclineDownsell={handleDeclineDownsell}
+        />
+      )}
+
+      {showCancellationModal && currentScreen === 'offer-accepted' && (
+        <OfferAcceptedScreen
+          onClose={handleCloseModal}
+          onBack={handleBackToInitial}
+          onContinue={handleOfferAcceptedContinue}
+        />
+      )}
+
+      {showCancellationModal && currentScreen === 'offer-declined' && (
+        <OfferDeclinedScreen
+          onClose={handleCloseModal}
+          onBack={handleBackToInitial}
+          onContinue={handleOfferDeclinedContinue}
+        />
+      )}
+
+      {/* Debug Information */}
+      {showCancellationModal && (
+        <div className="fixed top-4 right-4 bg-black text-white p-4 rounded-lg z-[60] text-xs">
+          <div>Modal Open: {showCancellationModal ? 'Yes' : 'No'}</div>
+          <div>Current Screen: {currentScreen}</div>
+          <div>Previous Screen: {previousScreen}</div>
+          <div>A/B Loading: {isABTestLoading ? 'Yes' : 'No'}</div>
+          <div>Downsell Variant: {downsellVariant}</div>
+          <div className="flex space-x-2 mt-2">
+            <button 
+              onClick={testDownsell}
+              className="bg-blue-500 text-white px-2 py-1 rounded text-xs"
+            >
+              Test Downsell
+            </button>
+            <button 
+              onClick={() => setCurrentScreen('offer-accepted')}
+              className="bg-green-500 text-white px-2 py-1 rounded text-xs"
+            >
+              Test Offer Accepted
+            </button>
+            <button 
+              onClick={() => setCurrentScreen('offer-declined')}
+              className="bg-orange-500 text-white px-2 py-1 rounded text-xs"
+            >
+              Test Offer Declined
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
