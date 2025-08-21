@@ -31,7 +31,8 @@ export default function VisaScreen({
     return () => clearTimeout(timer);
   }, []);
 
-  const handleRadioChange = (value: string) => {
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
     setHasImmigrationLawyer(value);
     // Set visa help flag based on selection
     setNeedsVisaHelp(value === 'no');
@@ -48,8 +49,8 @@ export default function VisaScreen({
     setNeedsVisaHelp(false);
   };
 
-  const handleVisaTypeChange = (value: string) => {
-    setVisaType(value);
+  const handleVisaTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setVisaType(event.target.value);
   };
 
   const handleComplete = () => {
@@ -370,120 +371,85 @@ export default function VisaScreen({
           </div>
 
           {/* Content - Mobile and Tablet with responsive spacing */}
-          <div className="flex-1 flex flex-col justify-start px-3 sm:px-4 pt-16 sm:pt-20 pb-4 sm:pb-6">
+          <div className="flex-1 flex flex-col justify-start px-3 sm:px-4 pt-16 sm:pt-20 pb-4 sm:pb-6 overflow-y-auto">
             <div className="space-y-4 sm:space-y-6">
               {/* Heading with staggered entrance and responsive text */}
               <div className={`space-y-2 transition-all duration-500 delay-200 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
                 <h2 className="text-lg sm:text-xl font-bold text-gray-800">
-                  You landed the job!
-                </h2>
-                <h2 className="text-lg sm:text-xl font-bold text-gray-800 italic">
-                  That's what we live for.
+                  Do you need help with visa support?
                 </h2>
               </div>
 
-              {/* Introductory Text with delay and responsive sizing */}
+              {/* Introductory text with delay and responsive sizing */}
               <p className={`text-sm sm:text-base text-gray-600 leading-relaxed transition-all duration-500 delay-300 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                Even if it wasn't through Migrate Mate, let us help get your visa sorted.
+                We understand that visa processes can be complex. Let us know if you need assistance.
               </p>
 
-              {/* Question 1 with delay and responsive sizing */}
-              <div className={`transition-all duration-500 delay-400 ${
+              {/* Radio Button Options with responsive sizing */}
+              <div className={`space-y-3 transition-all duration-500 delay-400 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                <p className="text-sm sm:text-base text-gray-700 font-medium">
-                  Is your company providing an immigration lawyer to help with your visa?
-                </p>
-              </div>
-
-              {/* Radio Buttons with staggered animation and responsive sizing */}
-              <div className={`space-y-3 transition-all duration-500 delay-500 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-              }`}>
-                {/* Show "Yes" option only when "No" is explicitly selected */}
                 {hasImmigrationLawyer !== 'no' && (
-                  <label className="flex items-center space-x-3 cursor-pointer group">
+                  <label className="flex items-center space-x-3 p-3 sm:p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:border-gray-300 hover:bg-gray-50">
                     <input
                       type="radio"
-                      name="immigrationLawyer"
+                      name="hasImmigrationLawyer"
                       value="yes"
                       checked={hasImmigrationLawyer === 'yes'}
-                      onChange={() => handleRadioChange('yes')}
-                      className="w-4 h-4 text-blue-600 border-2 border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200"
+                      onChange={handleRadioChange}
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-[#996EFF] border-gray-300 focus:ring-2 focus:ring-[#996EFF]"
                     />
-                    <span className="text-sm sm:text-base text-gray-800 group-hover:text-gray-900 transition-colors">Yes</span>
+                    <span className="text-sm sm:text-base font-medium text-gray-700">Yes</span>
                   </label>
                 )}
-                
-                {/* Show "No" option only when "Yes" is explicitly selected */}
+
                 {hasImmigrationLawyer !== 'yes' && (
-                  <label className="flex items-center space-x-3 cursor-pointer group">
+                  <label className="flex items-center space-x-3 p-3 sm:p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:border-gray-300 hover:bg-gray-50">
                     <input
                       type="radio"
-                      name="immigrationLawyer"
+                      name="hasImmigrationLawyer"
                       value="no"
                       checked={hasImmigrationLawyer === 'no'}
-                      onChange={() => handleRadioChange('no')}
-                      className="w-4 h-4 text-blue-600 border-2 border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200"
+                      onChange={handleRadioChange}
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-[#996EFF] border-gray-300 focus:ring-2 focus:ring-[#996EFF]"
                     />
-                    <span className="text-sm sm:text-base text-gray-800 group-hover:text-gray-900 transition-colors">No</span>
+                    <span className="text-sm sm:text-base font-medium text-gray-700">No</span>
                   </label>
                 )}
 
-                {/* Reset button - shows when a selection is made */}
+                {/* Reset button */}
                 {hasImmigrationLawyer !== '' && (
-                  <div className={`pt-2 transition-all duration-500 delay-600 ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                  }`}>
-                    <button
-                      onClick={handleResetSelection}
-                      className="text-xs text-gray-500 hover:text-gray-700 underline transition-colors"
-                    >
-                      Change selection
-                    </button>
-                  </div>
+                  <button
+                    onClick={handleResetSelection}
+                    className="text-xs sm:text-sm text-[#996EFF] hover:text-[#8A5FFF] transition-colors duration-200 underline"
+                  >
+                    Change selection
+                  </button>
                 )}
               </div>
 
-              {/* Conditional Text for "No" selection */}
-              {hasImmigrationLawyer === 'no' && (
-                <div className={`transition-all duration-500 delay-600 ${
-                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                }`}>
-                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                    We can connect you with one of our trusted partners.
-                  </p>
-                </div>
-              )}
-
-              {/* Visa Question - Always visible */}
-              <div className={`transition-all duration-500 delay-700 ${
+              {/* Visa Type Question - Always visible */}
+              <div className={`space-y-2 sm:space-y-3 transition-all duration-500 delay-500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                <p className="text-sm sm:text-base text-gray-700 font-medium">
-                  Which visa would you like to apply for?*
-                </p>
-              </div>
-
-              {/* Visa Type Input - Always visible */}
-              <div className={`transition-all duration-500 delay-800 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-              }`}>
+                <label className="text-xs sm:text-sm font-medium text-gray-700">
+                  What type of visa are you applying for?*
+                </label>
                 <input
                   type="text"
                   value={visaType}
-                  onChange={(e) => handleVisaTypeChange(e.target.value)}
-                  placeholder="Enter visa type..."
-                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border-2 border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all duration-200 text-sm sm:text-base"
+                  onChange={handleVisaTypeChange}
+                  placeholder="e.g., H-1B, L-1, O-1, etc."
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-black border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#996EFF] focus:border-[#996EFF] transition-all duration-200"
                 />
               </div>
 
-              {/* Complete Cancellation Button with responsive sizing */}
-              <div className={`pt-3 sm:pt-4 transition-all duration-500 delay-900 ${
+              {/* Continue Button with responsive sizing */}
+              <div className={`pt-2 sm:pt-3 transition-all duration-500 delay-600 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
                 <button
@@ -491,11 +457,11 @@ export default function VisaScreen({
                   disabled={!isFormValid}
                   className={`w-full py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg font-medium transition-all duration-300 text-sm sm:text-base ${
                     isFormValid
-                      ? 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]'
+                      ? 'bg-[#996EFF] text-white hover:bg-[#8A5FFF] hover:shadow-md hover:scale-[1.02] active:scale-[0.98]'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  Complete cancellation
+                  Continue
                 </button>
               </div>
             </div>
@@ -504,121 +470,86 @@ export default function VisaScreen({
 
         {/* Desktop Layout - Two Columns */}
         <div className="hidden lg:flex flex-1">
-          {/* Left Section - Form (60% width) with staggered animation */}
-          <div className="w-[60%] flex flex-col justify-start px-12 pt-16 pb-6">
+          {/* Left Section - Content (60% width) with staggered animation */}
+          <div className="w-[60%] flex flex-col justify-start px-12 pt-16 pb-6 overflow-y-auto">
             <div className="space-y-6">
               {/* Heading with staggered entrance */}
               <div className={`space-y-2 transition-all duration-500 delay-200 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-800">
-                  You landed the job!
-                </h2>
-                <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 italic">
-                  That's what we live for.
+                  Do you need help with visa support?
                 </h2>
               </div>
 
-              {/* Introductory Text with delay */}
+              {/* Introductory text with delay */}
               <p className={`text-base lg:text-lg text-gray-600 leading-relaxed max-w-md transition-all duration-500 delay-300 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                Even if it wasn't through Migrate Mate, let us help get your visa sorted.
+                We understand that visa processes can be complex. Let us know if you need assistance.
               </p>
 
-              {/* Question 1 with delay */}
-              <div className={`transition-all duration-500 delay-400 ${
+              {/* Radio Button Options with delay */}
+              <div className={`space-y-4 transition-all duration-500 delay-400 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                <p className="text-base lg:text-lg text-gray-700 font-medium">
-                  Is your company providing an immigration lawyer to help with your visa?
-                </p>
-              </div>
-
-              {/* Radio Buttons with staggered animation */}
-              <div className={`space-y-4 transition-all duration-500 delay-500 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-              }`}>
-                {/* Show "Yes" option only when "No" is explicitly selected */}
                 {hasImmigrationLawyer !== 'no' && (
-                  <label className="flex items-center space-x-4 cursor-pointer group">
+                  <label className="flex items-center space-x-4 p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:border-gray-300 hover:bg-gray-50">
                     <input
                       type="radio"
-                      name="immigrationLawyer"
+                      name="hasImmigrationLawyer"
                       value="yes"
                       checked={hasImmigrationLawyer === 'yes'}
-                      onChange={() => handleRadioChange('yes')}
-                      className="w-5 h-5 text-blue-600 border-2 border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200"
+                      onChange={handleRadioChange}
+                      className="w-5 h-5 text-[#996EFF] border-gray-300 focus:ring-2 focus:ring-[#996EFF]"
                     />
-                    <span className="text-lg text-gray-800 group-hover:text-gray-900 transition-colors">Yes</span>
+                    <span className="text-base lg:text-lg font-medium text-gray-700">Yes</span>
                   </label>
                 )}
-                
-                {/* Show "No" option only when "Yes" is explicitly selected */}
+
                 {hasImmigrationLawyer !== 'yes' && (
-                  <label className="flex items-center space-x-4 cursor-pointer group">
+                  <label className="flex items-center space-x-4 p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:border-gray-300 hover:bg-gray-50">
                     <input
                       type="radio"
-                      name="immigrationLawyer"
+                      name="hasImmigrationLawyer"
                       value="no"
                       checked={hasImmigrationLawyer === 'no'}
-                      onChange={() => handleRadioChange('no')}
-                      className="w-5 h-5 text-blue-600 border-2 border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200"
+                      onChange={handleRadioChange}
+                      className="w-5 h-5 text-[#996EFF] border-gray-300 focus:ring-2 focus:ring-[#996EFF]"
                     />
-                    <span className="text-lg text-gray-800 group-hover:text-gray-900 transition-colors">No</span>
+                    <span className="text-base lg:text-lg font-medium text-gray-700">No</span>
                   </label>
                 )}
 
-                {/* Reset button - shows when a selection is made */}
+                {/* Reset button */}
                 {hasImmigrationLawyer !== '' && (
-                  <div className={`pt-2 transition-all duration-500 delay-600 ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                  }`}>
-                    <button
-                      onClick={handleResetSelection}
-                      className="text-sm text-gray-500 hover:text-gray-700 underline transition-colors"
-                    >
-                      Change selection
-                    </button>
-                  </div>
+                  <button
+                    onClick={handleResetSelection}
+                    className="text-sm text-[#996EFF] hover:text-[#8A5FFF] transition-colors duration-200 underline"
+                  >
+                    Change selection
+                  </button>
                 )}
               </div>
 
-              {/* Conditional Text for "No" selection */}
-              {hasImmigrationLawyer === 'no' && (
-                <div className={`transition-all duration-500 delay-600 ${
-                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                }`}>
-                  <p className="text-base lg:text-lg text-gray-600 leading-relaxed">
-                    We can connect you with one of our trusted partners.
-                  </p>
-                </div>
-              )}
-
-              {/* Visa Question - Always visible */}
-              <div className={`transition-all duration-500 delay-700 ${
+              {/* Visa Type Question - Always visible */}
+              <div className={`space-y-3 transition-all duration-500 delay-500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                <p className="text-base lg:text-lg text-gray-700 font-medium">
-                  Which visa would you like to apply for?*
-                </p>
-              </div>
-
-              {/* Visa Type Input - Always visible */}
-              <div className={`transition-all duration-500 delay-800 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-              }`}>
+                <label className="text-base lg:text-lg font-medium text-gray-700">
+                  What type of visa are you applying for?*
+                </label>
                 <input
                   type="text"
                   value={visaType}
-                  onChange={(e) => handleVisaTypeChange(e.target.value)}
-                  placeholder="Enter visa type..."
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
+                  onChange={handleVisaTypeChange}
+                  placeholder="e.g., H-1B, L-1, O-1, etc."
+                  className="w-full px-4 py-3 text-base lg:text-lg text-black border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#996EFF] focus:border-[#996EFF] transition-all duration-200"
                 />
               </div>
 
-              {/* Complete Cancellation Button with enhanced hover effects */}
-              <div className={`pt-6 transition-all duration-500 delay-900 ${
+              {/* Continue Button with enhanced hover effects */}
+              <div className={`pt-4 transition-all duration-500 delay-600 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
                 <button
@@ -626,11 +557,11 @@ export default function VisaScreen({
                   disabled={!isFormValid}
                   className={`w-full py-4 px-6 rounded-lg font-medium transition-all duration-300 ${
                     isFormValid
-                      ? 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]'
+                      ? 'bg-[#996EFF] text-white hover:bg-[#8A5FFF] hover:shadow-md hover:scale-[1.02] active:scale-[0.98]'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  Complete cancellation
+                  Continue
                 </button>
               </div>
             </div>
@@ -640,8 +571,8 @@ export default function VisaScreen({
           <div className="w-[40%] flex items-center justify-center px-8 py-8">
             <div className="relative w-full max-w-[320px] h-[400px] rounded-[20px] overflow-hidden shadow-lg">
               <Image
-                src="/skyline_image.jpg"
-                alt="City skyline with Empire State Building"
+                src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
+                alt="New York City skyline at twilight with Empire State Building"
                 fill
                 className={`object-cover object-center transition-all duration-700 ${
                   isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'

@@ -111,52 +111,55 @@ export default function FeedbackScreen({
           </div>
 
           {/* Content - Mobile and Tablet with responsive spacing */}
-          <div className="flex-1 flex flex-col justify-start px-3 sm:px-4 pt-16 sm:pt-20 pb-4 sm:pb-6">
+          <div className="flex-1 flex flex-col justify-start px-3 sm:px-4 pt-16 sm:pt-20 pb-4 sm:pb-6 overflow-y-auto">
             <div className="space-y-4 sm:space-y-6">
               {/* Heading with staggered entrance and responsive text */}
               <div className={`space-y-2 transition-all duration-500 delay-200 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
                 <h2 className="text-lg sm:text-xl font-bold text-gray-800">
-                  What's one thing you wish we could've helped you with?
+                  Help us understand your experience
                 </h2>
               </div>
 
-              {/* Instructional Text with delay and responsive sizing */}
+              {/* Instructional text with delay and responsive sizing */}
               <p className={`text-sm sm:text-base text-gray-600 leading-relaxed transition-all duration-500 delay-300 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                We're always looking to improve, your thoughts can help us make Migrate Mate more useful for others.*
+                We'd love to hear your feedback to improve our service for others.
               </p>
 
-              {/* Text Area with staggered animation and responsive sizing */}
-              <div className={`space-y-2 transition-all duration-500 delay-400 ${
+              {/* Text area with delay and responsive sizing */}
+              <div className={`space-y-2 sm:space-y-3 transition-all duration-500 delay-400 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
+                <label className="text-xs sm:text-sm font-medium text-gray-700">
+                  What could we have done better?*
+                </label>
                 <div className="relative">
                   <textarea
                     value={feedback}
-                    onChange={handleFeedbackChange}
-                    placeholder="Share your feedback here..."
-                    className="w-full h-28 sm:h-32 px-3 sm:px-4 py-2.5 sm:py-3 border-2 border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 resize-none focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all duration-200 text-sm sm:text-base"
+                    onChange={(e) => setFeedback(e.target.value)}
+                    placeholder="Share your thoughts..."
+                    className="w-full h-28 sm:h-32 px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-[#996EFF] focus:border-[#996EFF] transition-all duration-200"
+                    maxLength={500}
                   />
-                  {/* Character Counter with responsive text */}
-                  <div className="absolute bottom-2 right-2 sm:bottom-2 sm:right-3 text-xs text-gray-400">
-                    Min {minCharacters} characters ({currentCharacters}/{minCharacters})
+                  <div className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 text-xs text-gray-400">
+                    {feedback.length}/500
                   </div>
                 </div>
               </div>
 
               {/* Continue Button with responsive sizing */}
-              <div className={`pt-3 sm:pt-4 transition-all duration-500 delay-500 ${
+              <div className={`pt-2 sm:pt-3 transition-all duration-500 delay-600 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
                 <button
                   onClick={onContinue}
-                  disabled={!isFormValid}
+                  disabled={!feedback.trim()}
                   className={`w-full py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg font-medium transition-all duration-300 text-sm sm:text-base ${
-                    isFormValid
-                      ? 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]'
+                    feedback.trim()
+                      ? 'bg-[#996EFF] text-white hover:bg-[#8A5FFF] hover:shadow-md hover:scale-[1.02] active:scale-[0.98]'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
@@ -169,53 +172,56 @@ export default function FeedbackScreen({
 
         {/* Desktop Layout - Two Columns */}
         <div className="hidden lg:flex flex-1">
-          {/* Left Section - Form (60% width) with staggered animation */}
-          <div className="w-[60%] flex flex-col justify-start px-12 pt-16 pb-6">
+          {/* Left Section - Content (60% width) with staggered animation */}
+          <div className="w-[60%] flex flex-col justify-start px-12 pt-16 pb-6 overflow-y-auto">
             <div className="space-y-6">
               {/* Heading with staggered entrance */}
               <div className={`space-y-2 transition-all duration-500 delay-200 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-800">
-                  What's one thing you wish we could've helped you with?
+                  Help us understand your experience
                 </h2>
               </div>
 
-              {/* Descriptive Text with delay */}
+              {/* Instructional text with delay */}
               <p className={`text-base lg:text-lg text-gray-600 leading-relaxed max-w-md transition-all duration-500 delay-300 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                We're always looking to improve, your thoughts can help us make Migrate Mate more useful for others.*
+                We'd love to hear your feedback to improve our service for others.
               </p>
 
-              {/* Text Area with staggered animation */}
-              <div className={`space-y-2 transition-all duration-500 delay-400 ${
+              {/* Text area with delay */}
+              <div className={`space-y-3 transition-all duration-500 delay-400 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
+                <label className="text-base lg:text-lg font-medium text-gray-700">
+                  What could we have done better?*
+                </label>
                 <div className="relative">
                   <textarea
                     value={feedback}
-                    onChange={handleFeedbackChange}
-                    placeholder="Share your feedback here..."
-                    className="w-full h-32 px-4 py-3 border-2 border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 resize-none focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
+                    onChange={(e) => setFeedback(e.target.value)}
+                    placeholder="Share your thoughts..."
+                    className="w-full h-32 text-base lg:text-lg px-4 py-3 border-2 border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-[#996EFF] focus:border-[#996EFF] transition-all duration-200"
+                    maxLength={500}
                   />
-                  {/* Character Counter */}
-                  <div className="absolute bottom-2 right-3 text-xs text-gray-400">
-                    Min {minCharacters} characters ({currentCharacters}/{minCharacters})
+                  <div className="absolute bottom-3 right-3 text-sm text-gray-400">
+                    {feedback.length}/500
                   </div>
                 </div>
               </div>
 
               {/* Continue Button with enhanced hover effects */}
-              <div className={`pt-4 transition-all duration-500 delay-500 ${
+              <div className={`pt-4 transition-all duration-500 delay-600 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
                 <button
                   onClick={onContinue}
-                  disabled={!isFormValid}
+                  disabled={!feedback.trim()}
                   className={`w-full py-4 px-6 rounded-lg font-medium transition-all duration-300 ${
-                    isFormValid
-                      ? 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]'
+                    feedback.trim()
+                      ? 'bg-[#996EFF] text-white hover:bg-[#8A5FFF] hover:shadow-md hover:scale-[1.02] active:scale-[0.98]'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >

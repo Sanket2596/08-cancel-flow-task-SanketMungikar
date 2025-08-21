@@ -93,7 +93,7 @@ export default function OfferAcceptedScreen({
           </div>
 
           {/* Content - Mobile and Tablet with responsive spacing */}
-          <div className="flex-1 flex flex-col justify-start px-3 sm:px-4 pt-16 sm:pt-20 pb-4 sm:pb-6">
+          <div className="flex-1 flex flex-col justify-start px-3 sm:px-4 pt-16 sm:pt-20 pb-4 sm:pb-6 overflow-y-auto">
             <div className="space-y-4 sm:space-y-6">
               {/* Heading with staggered entrance and responsive text */}
               <div className={`space-y-2 transition-all duration-500 delay-200 ${
@@ -148,7 +148,7 @@ export default function OfferAcceptedScreen({
         {/* Desktop Layout - Two Columns */}
         <div className="hidden lg:flex flex-1">
           {/* Left Section - Content (60% width) with staggered animation */}
-          <div className="w-[60%] flex flex-col justify-center px-12 pt-16 pb-6">
+          <div className="w-[60%] flex flex-col justify-start px-12 pt-16 pb-6 overflow-y-auto">
             <div className="space-y-6">
               {/* Heading with staggered entrance */}
               <div className={`space-y-2 transition-all duration-500 delay-200 ${

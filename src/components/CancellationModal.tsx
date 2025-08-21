@@ -107,8 +107,8 @@ export default function CancellationModal({
             {/* City Skyline Image - Mobile and Tablet */}
             <div className="relative w-full h-40 sm:h-48 rounded-t-[20px] overflow-hidden">
               <Image
-                src="/skyline_image.jpg"
-                alt="City skyline with Empire State Building"
+                src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
+                alt="New York City skyline at twilight with Empire State Building"
                 fill
                 className={`object-cover object-center transition-all duration-700 ${
                   isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'
@@ -131,32 +131,31 @@ export default function CancellationModal({
                   <h2 className="text-lg sm:text-xl font-bold text-gray-800">
                     Quick one before you go.
                   </h2>
-                  <h2 className="text-xl sm:text-2xl font-bold text-gray-800 italic">
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-800 italic">
                     Have you found a job yet?
                   </h2>
                 </div>
 
-                {/* Descriptive Text with delay and responsive sizing */}
+                {/* Descriptive text with delay and responsive sizing */}
                 <p className={`text-sm sm:text-base text-gray-600 leading-relaxed transition-all duration-500 delay-300 ${
                   isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 }`}>
-                  Whatever your answer, we just want to help you take the next step.
-                  With visa support, or by hearing how we can do better.
+                  Whatever your answer, we just want to help you take the next step. With visa support, or by hearing how we can do better.
                 </p>
 
-                {/* Action Buttons with staggered animation and responsive sizing */}
-                <div className={`space-y-3 sm:space-y-4 pt-3 sm:pt-4 transition-all duration-500 delay-400 ${
+                {/* Action Buttons with responsive sizing */}
+                <div className={`space-y-3 pt-2 sm:pt-3 transition-all duration-500 delay-600 ${
                   isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 }`}>
                   <button
-                    onClick={handleJobFound}
-                    className="w-full py-2.5 sm:py-3 px-4 sm:px-6 border-2 border-gray-300 rounded-lg text-gray-800 font-medium transition-all duration-300 hover:border-blue-400 hover:bg-blue-50 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base"
+                    onClick={onJobFound}
+                    className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-medium transition-all duration-300 hover:border-gray-400 hover:bg-gray-50 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base"
                   >
-                    Yes, I've found a job 🎉
+                    Yes, I've found a job
                   </button>
                   <button
                     onClick={onStillLooking}
-                    className="w-full py-2.5 sm:py-3 px-4 sm:px-6 border-2 border-gray-300 rounded-lg text-gray-800 font-medium transition-all duration-300 hover:border-blue-400 hover:bg-blue-50 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base"
+                    className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-medium transition-all duration-300 hover:border-gray-400 hover:bg-gray-50 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base"
                   >
                     Not yet - I'm still looking
                   </button>
@@ -167,45 +166,44 @@ export default function CancellationModal({
 
           {/* Desktop Layout - Two Columns */}
           <div className="hidden lg:flex flex-1">
-            {/* Left Section - Text and Buttons (60% width) with staggered animation */}
-            <div className="w-[60%] flex flex-col justify-center px-12 py-8">
+            {/* Left Section - Content (60% width) with staggered animation */}
+            <div className="w-[60%] flex flex-col justify-center px-12 pt-16 pb-6">
               <div className="space-y-6">
                 {/* Heading with staggered entrance */}
                 <div className={`space-y-2 transition-all duration-500 delay-200 ${
                   isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 }`}>
-                  <h2 className="text-xl lg:text-2xl font-semibold text-gray-800">
+                  <h2 className="text-2xl lg:text-3xl font-bold text-gray-800">
                     Hey mate,
                   </h2>
-                  <h2 className="text-xl lg:text-2xl font-semibold text-gray-800">
+                  <h2 className="text-2xl lg:text-3xl font-bold text-gray-800">
                     Quick one before you go.
                   </h2>
-                  <h2 className="text-2xl lg:text-3xl font-semibold text-gray-800 italic">
+                  <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 italic">
                     Have you found a job yet?
                   </h2>
                 </div>
 
-                {/* Descriptive Text with delay */}
+                {/* Descriptive text with delay */}
                 <p className={`text-base lg:text-lg text-gray-600 leading-relaxed max-w-md transition-all duration-500 delay-300 ${
                   isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 }`}>
-                  Whatever your answer, we just want to help you take the next step.
-                  With visa support, or by hearing how we can do better.
+                  Whatever your answer, we just want to help you take the next step. With visa support, or by hearing how we can do better.
                 </p>
 
-                {/* Action Buttons with staggered animation and enhanced hover effects */}
-                <div className={`space-y-4 pt-4 transition-all duration-500 delay-400 ${
+                {/* Action Buttons with enhanced hover effects */}
+                <div className={`space-y-4 pt-4 transition-all duration-500 delay-600 ${
                   isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 }`}>
                   <button
-                    onClick={handleJobFound}
-                    className="w-full py-3 lg:py-4 px-6 border-2 border-gray-300 rounded-lg text-gray-800 font-medium transition-all duration-300 hover:border-blue-400 hover:bg-blue-50 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
+                    onClick={onJobFound}
+                    className="w-full py-4 px-6 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-medium transition-all duration-300 hover:border-gray-400 hover:bg-gray-50 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
                   >
-                    Yes, I've found a job 🎉
+                    Yes, I've found a job
                   </button>
                   <button
                     onClick={onStillLooking}
-                    className="w-full py-3 lg:py-4 px-6 border-2 border-gray-300 rounded-lg text-gray-800 font-medium transition-all duration-300 hover:border-blue-400 hover:bg-blue-50 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
+                    className="w-full py-4 px-6 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-medium transition-all duration-300 hover:border-gray-400 hover:bg-gray-50 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
                   >
                     Not yet - I'm still looking
                   </button>
@@ -217,8 +215,8 @@ export default function CancellationModal({
             <div className="w-[40%] flex items-center justify-center px-8 py-8">
               <div className="relative w-full max-w-[320px] h-[400px] rounded-[20px] overflow-hidden shadow-lg">
                 <Image
-                  src="/skyline_image.jpg"
-                  alt="City skyline with Empire State Building"
+                  src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
+                  alt="New York City skyline at twilight with Empire State Building"
                   fill
                   className={`object-cover object-center transition-all duration-700 ${
                     isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'

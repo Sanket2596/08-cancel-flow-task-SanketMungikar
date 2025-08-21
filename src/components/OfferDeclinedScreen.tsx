@@ -107,8 +107,8 @@ export default function OfferDeclinedScreen({
           {/* City Skyline Image - Mobile and Tablet */}
           <div className="relative w-full h-40 sm:h-48 rounded-t-[20px] overflow-hidden">
             <Image
-              src="/skyline_image.jpg"
-              alt="City skyline with Empire State Building"
+              src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
+              alt="New York City skyline at twilight with Empire State Building"
               fill
               className={`object-cover object-center transition-all duration-700 ${
                 isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'
@@ -121,44 +121,51 @@ export default function OfferDeclinedScreen({
           {/* Content - Mobile and Tablet with responsive spacing */}
           <div className="flex-1 flex flex-col justify-start px-3 sm:px-4 pt-16 sm:pt-20 pb-4 sm:pb-6 overflow-y-auto">
             <div className="space-y-4 sm:space-y-6">
-              {/* Main Heading with staggered entrance and responsive text */}
+              {/* Heading with staggered entrance and responsive text */}
               <div className={`space-y-2 transition-all duration-500 delay-200 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
                 <h2 className="text-lg sm:text-xl font-bold text-gray-800">
                   Help us understand how you were using Migrate Mate.
                 </h2>
-                
-                {/* Progress indicator for questions */}
-                <div className="flex items-center space-x-2">
-                  <span className="text-xs sm:text-sm text-gray-500">
-                    {Object.values(formData).filter(value => value !== '').length} of 3 questions answered
+              </div>
+
+              {/* Progress Indicator with delay and responsive sizing */}
+              <div className={`space-y-2 transition-all duration-500 delay-300 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs sm:text-sm text-gray-600">
+                    {Object.values(formData).filter(Boolean).length} of 3 questions answered
                   </span>
-                  <div className="flex-1 bg-gray-200 rounded-full h-2">
-                    <div 
-                      className="bg-[#996EFF] h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${(Object.values(formData).filter(value => value !== '').length / 3) * 100}%` }}
-                    ></div>
-                  </div>
+                  <span className="text-xs sm:text-sm text-gray-500">
+                    {Math.round((Object.values(formData).filter(Boolean).length / 3) * 100)}%
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div 
+                    className="bg-[#996EFF] h-2 rounded-full transition-all duration-300"
+                    style={{ width: `${(Object.values(formData).filter(Boolean).length / 3) * 100}%` }}
+                  ></div>
                 </div>
               </div>
 
-              {/* Question 1: Roles Applied */}
-              <div className={`space-y-3 transition-all duration-500 delay-300 ${
+              {/* Question 1 with responsive sizing */}
+              <div className={`space-y-2 sm:space-y-3 transition-all duration-500 delay-400 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                <p className="text-sm sm:text-base text-gray-700 font-medium">
-                  How many roles did you apply for through Migrate Mate?
-                </p>
-                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                <label className="text-xs sm:text-sm font-medium text-gray-700">
+                  How many roles did you apply for through Migrate Mate?*
+                </label>
+                <div className="grid grid-cols-2 gap-2">
                   {['0', '1-5', '6-20', '20+'].map((option) => (
                     <button
                       key={option}
                       onClick={() => handleOptionSelect('rolesApplied', option)}
-                      className={`py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg text-sm sm:text-base font-medium transition-all duration-200 ${
+                      className={`py-2.5 sm:py-3 px-2 sm:px-3 rounded-lg border-2 transition-all duration-200 text-xs sm:text-sm ${
                         formData.rolesApplied === option
-                          ? 'bg-[#996EFF] text-white shadow-md'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-sm'
+                          ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
+                          : 'border-gray-300 text-gray-700 hover:border-gray-400'
                       }`}
                     >
                       {option}
@@ -167,22 +174,22 @@ export default function OfferDeclinedScreen({
                 </div>
               </div>
 
-              {/* Question 2: Companies Emailed */}
-              <div className={`space-y-3 transition-all duration-500 delay-400 ${
+              {/* Question 2 with responsive sizing */}
+              <div className={`space-y-2 sm:space-y-3 transition-all duration-500 delay-500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                <p className="text-sm sm:text-base text-gray-700 font-medium">
-                  How many companies did you email directly?
-                </p>
-                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                <label className="text-xs sm:text-sm font-medium text-gray-700">
+                  How many companies did you email directly?*
+                </label>
+                <div className="grid grid-cols-2 gap-2">
                   {['0', '1-5', '6-20', '20+'].map((option) => (
                     <button
                       key={option}
                       onClick={() => handleOptionSelect('companiesEmailed', option)}
-                      className={`py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg text-sm sm:text-base font-medium transition-all duration-200 ${
+                      className={`py-2.5 sm:py-3 px-2 sm:px-3 rounded-lg border-2 transition-all duration-200 text-xs sm:text-sm ${
                         formData.companiesEmailed === option
-                          ? 'bg-[#996EFF] text-white shadow-md'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-sm'
+                          ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
+                          : 'border-gray-300 text-gray-700 hover:border-gray-400'
                       }`}
                     >
                       {option}
@@ -191,22 +198,22 @@ export default function OfferDeclinedScreen({
                 </div>
               </div>
 
-              {/* Question 3: Companies Interviewed */}
-              <div className={`space-y-3 transition-all duration-500 delay-500 ${
+              {/* Question 3 with responsive sizing */}
+              <div className={`space-y-2 sm:space-y-3 transition-all duration-500 delay-600 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                <p className="text-sm sm:text-base text-gray-700 font-medium">
-                  How many different companies did you interview with?
-                </p>
-                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                <label className="text-xs sm:text-sm font-medium text-gray-700">
+                  How many different companies did you interview with?*
+                </label>
+                <div className="grid grid-cols-2 gap-2">
                   {['0', '1-2', '3-5', '5+'].map((option) => (
                     <button
                       key={option}
                       onClick={() => handleOptionSelect('companiesInterviewed', option)}
-                      className={`py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg text-sm sm:text-base font-medium transition-all duration-200 ${
+                      className={`py-2.5 sm:py-3 px-2 sm:px-3 rounded-lg border-2 transition-all duration-200 text-xs sm:text-sm ${
                         formData.companiesInterviewed === option
-                          ? 'bg-[#996EFF] text-white shadow-md'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-sm'
+                          ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
+                          : 'border-gray-300 text-gray-700 hover:border-gray-400'
                       }`}
                     >
                       {option}
@@ -215,11 +222,13 @@ export default function OfferDeclinedScreen({
                 </div>
               </div>
 
-              {/* Helpful hint text */}
-              <div className={`text-center transition-all duration-500 delay-550 ${
+              {/* Helpful Hint Text with delay and responsive sizing */}
+              <div className={`transition-all duration-500 delay-700 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                <p className="text-xs sm:text-sm text-gray-500">
+                <p className={`text-xs sm:text-sm text-center ${
+                  isFormValid ? 'text-green-600' : 'text-gray-500'
+                }`}>
                   {isFormValid 
                     ? '✅ All questions answered! You can now continue.' 
                     : 'Please answer all questions above to continue'
@@ -228,18 +237,18 @@ export default function OfferDeclinedScreen({
               </div>
 
               {/* Action Buttons with responsive sizing */}
-              <div className={`space-y-3 pt-2 sm:pt-3 transition-all duration-500 delay-600 ${
+              <div className={`space-y-3 pt-2 sm:pt-3 transition-all duration-500 delay-800 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                {/* Green Button: Get 50% off */}
-                <button
-                  onClick={onContinue}
-                  className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-green-600 text-white rounded-lg font-medium transition-all duration-300 hover:bg-green-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base"
-                >
-                  Get 50% off | $12.50 <span className="line-through">$25</span>
-                </button>
+                                 {/* Primary Button: Get 50% off */}
+                 <button
+                   onClick={onContinue}
+                   className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-green-600 text-white rounded-lg font-medium transition-all duration-300 hover:bg-green-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base"
+                 >
+                   Get 50% off | $12.50 <span className="line-through">$25</span>
+                 </button>
 
-                {/* Red Button: Continue - Disabled until all questions answered */}
+                {/* Secondary Button: Continue */}
                 <button
                   onClick={onContinue}
                   disabled={!isFormValid}
@@ -261,44 +270,51 @@ export default function OfferDeclinedScreen({
           {/* Left Section - Content (60% width) with staggered animation */}
           <div className="w-[60%] flex flex-col justify-start px-12 pt-16 pb-6 overflow-y-auto">
             <div className="space-y-6">
-              {/* Main Heading with staggered entrance */}
+              {/* Heading with staggered entrance */}
               <div className={`space-y-2 transition-all duration-500 delay-200 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-800">
                   Help us understand how you were using Migrate Mate.
                 </h2>
-                
-                {/* Progress indicator for questions */}
-                <div className="flex items-center space-x-3">
-                  <span className="text-sm text-gray-500">
-                    {Object.values(formData).filter(value => value !== '').length} of 3 questions answered
+              </div>
+
+              {/* Progress Indicator with delay */}
+              <div className={`space-y-3 transition-all duration-500 delay-300 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
+                <div className="flex items-center justify-between">
+                  <span className="text-base lg:text-lg text-gray-600">
+                    {Object.values(formData).filter(Boolean).length} of 3 questions answered
                   </span>
-                  <div className="flex-1 bg-gray-200 rounded-full h-2.5">
-                    <div 
-                      className="bg-[#996EFF] h-2.5 rounded-full transition-all duration-300"
-                      style={{ width: `${(Object.values(formData).filter(value => value !== '').length / 3) * 100}%` }}
-                    ></div>
-                  </div>
+                  <span className="text-base lg:text-lg text-gray-500">
+                    {Math.round((Object.values(formData).filter(Boolean).length / 3) * 100)}%
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-3">
+                  <div 
+                    className="bg-[#996EFF] h-3 rounded-full transition-all duration-300"
+                    style={{ width: `${(Object.values(formData).filter(Boolean).length / 3) * 100}%` }}
+                  ></div>
                 </div>
               </div>
 
-              {/* Question 1: Roles Applied */}
-              <div className={`space-y-4 transition-all duration-500 delay-300 ${
+              {/* Question 1 with delay */}
+              <div className={`space-y-3 transition-all duration-500 delay-400 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                <p className="text-base lg:text-lg text-gray-700 font-medium">
-                  How many roles did you apply for through Migrate Mate?
-                </p>
+                <label className="text-base lg:text-lg font-medium text-gray-700">
+                  How many roles did you apply for through Migrate Mate?*
+                </label>
                 <div className="grid grid-cols-2 gap-3">
                   {['0', '1-5', '6-20', '20+'].map((option) => (
                     <button
                       key={option}
                       onClick={() => handleOptionSelect('rolesApplied', option)}
-                      className={`py-3 px-4 rounded-lg text-base font-medium transition-all duration-200 ${
+                      className={`py-3 px-4 rounded-lg border-2 transition-all duration-200 ${
                         formData.rolesApplied === option
-                          ? 'bg-[#996EFF] text-white shadow-md'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-sm'
+                          ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
+                          : 'border-gray-300 text-gray-700 hover:border-gray-400'
                       }`}
                     >
                       {option}
@@ -307,22 +323,22 @@ export default function OfferDeclinedScreen({
                 </div>
               </div>
 
-              {/* Question 2: Companies Emailed */}
-              <div className={`space-y-4 transition-all duration-500 delay-400 ${
+              {/* Question 2 with delay */}
+              <div className={`space-y-3 transition-all duration-500 delay-500 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                <p className="text-base lg:text-lg text-gray-700 font-medium">
-                  How many companies did you email directly?
-                </p>
+                <label className="text-base lg:text-lg font-medium text-gray-700">
+                  How many companies did you email directly?*
+                </label>
                 <div className="grid grid-cols-2 gap-3">
                   {['0', '1-5', '6-20', '20+'].map((option) => (
                     <button
                       key={option}
                       onClick={() => handleOptionSelect('companiesEmailed', option)}
-                      className={`py-3 px-4 rounded-lg text-base font-medium transition-all duration-200 ${
+                      className={`py-3 px-4 rounded-lg border-2 transition-all duration-200 ${
                         formData.companiesEmailed === option
-                          ? 'bg-[#996EFF] text-white shadow-md'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-sm'
+                          ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
+                          : 'border-gray-300 text-gray-700 hover:border-gray-400'
                       }`}
                     >
                       {option}
@@ -331,22 +347,22 @@ export default function OfferDeclinedScreen({
                 </div>
               </div>
 
-              {/* Question 3: Companies Interviewed */}
-              <div className={`space-y-4 transition-all duration-500 delay-500 ${
+              {/* Question 3 with delay */}
+              <div className={`space-y-3 transition-all duration-500 delay-600 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                <p className="text-base lg:text-lg text-gray-700 font-medium">
-                  How many different companies did you interview with?
-                </p>
+                <label className="text-base lg:text-lg font-medium text-gray-700">
+                  How many different companies did you interview with?*
+                </label>
                 <div className="grid grid-cols-2 gap-3">
                   {['0', '1-2', '3-5', '5+'].map((option) => (
                     <button
                       key={option}
                       onClick={() => handleOptionSelect('companiesInterviewed', option)}
-                      className={`py-3 px-4 rounded-lg text-base font-medium transition-all duration-200 ${
+                      className={`py-3 px-4 rounded-lg border-2 transition-all duration-200 ${
                         formData.companiesInterviewed === option
-                          ? 'bg-[#996EFF] text-white shadow-md'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-sm'
+                          ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
+                          : 'border-gray-300 text-gray-700 hover:border-gray-400'
                       }`}
                     >
                       {option}
@@ -355,11 +371,13 @@ export default function OfferDeclinedScreen({
                 </div>
               </div>
 
-              {/* Helpful hint text */}
-              <div className={`text-center transition-all duration-500 delay-550 ${
+              {/* Helpful Hint Text with delay */}
+              <div className={`transition-all duration-500 delay-700 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                <p className="text-sm text-gray-500">
+                <p className={`text-sm text-center ${
+                  isFormValid ? 'text-green-600' : 'text-gray-500'
+                }`}>
                   {isFormValid 
                     ? '✅ All questions answered! You can now continue.' 
                     : 'Please answer all questions above to continue'
@@ -368,22 +386,22 @@ export default function OfferDeclinedScreen({
               </div>
 
               {/* Action Buttons with enhanced hover effects */}
-              <div className={`space-y-4 pt-4 transition-all duration-500 delay-600 ${
+              <div className={`space-y-4 pt-4 transition-all duration-500 delay-800 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                {/* Green Button: Get 50% off */}
-                <button
-                  onClick={onContinue}
-                  className="w-full py-4 px-6 bg-green-600 text-white rounded-lg font-medium transition-all duration-300 hover:bg-green-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  Get 50% off | $12.50 <span className="line-through">$25</span>
-                </button>
+                                 {/* Primary Button: Get 50% off */}
+                 <button
+                   onClick={onContinue}
+                   className="w-full py-4 px-6 bg-green-600 text-white rounded-lg font-medium transition-all duration-300 hover:bg-green-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
+                 >
+                   Get 50% off | $12.50 <span className="line-through">$25</span>
+                 </button>
 
-                {/* Red Button: Continue - Disabled until all questions answered */}
+                {/* Secondary Button: Continue */}
                 <button
                   onClick={onContinue}
                   disabled={!isFormValid}
-                  className={`w-full py-4 px-6 rounded-lg font-medium transition-all duration-300 text-sm sm:text-base ${
+                  className={`w-full py-4 px-6 rounded-lg font-medium transition-all duration-300 ${
                     isFormValid
                       ? 'bg-red-600 text-white hover:bg-red-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
@@ -399,8 +417,8 @@ export default function OfferDeclinedScreen({
           <div className="w-[40%] flex items-center justify-center px-8 py-8">
             <div className="relative w-full max-w-[320px] h-[400px] rounded-[20px] overflow-hidden shadow-lg">
               <Image
-                src="/skyline_image.jpg"
-                alt="City skyline with Empire State Building"
+                src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
+                alt="New York City skyline at twilight with Empire State Building"
                 fill
                 className={`object-cover object-center transition-all duration-700 ${
                   isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'

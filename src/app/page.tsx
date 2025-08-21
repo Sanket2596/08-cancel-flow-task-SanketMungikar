@@ -9,6 +9,7 @@ import DownsellScreen from '../components/DownsellScreen';
 import OfferAcceptedScreen from '../components/OfferAcceptedScreen';
 import OfferDeclinedScreen from '../components/OfferDeclinedScreen';
 import DiscountAcceptedScreen from '../components/DiscountAcceptedScreen';
+import FinalCancellationScreen from '../components/FinalCancellationScreen';
 import { useABTest } from '../hooks/useABTest';
 
 // Mock user data for UI display
@@ -34,19 +35,17 @@ export default function ProfilePage() {
   const [loading] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [showCancellationModal, setShowCancellationModal] = useState(false);
-  const [currentScreen, setCurrentScreen] = useState<'initial' | 'job-found' | 'feedback' | 'visa' | 'downsell' | 'offer-accepted' | 'offer-declined' | 'discount-accepted'>('initial');
-  const [previousScreen, setPreviousScreen] = useState<'initial' | 'job-found' | 'feedback' | 'visa' | 'downsell' | 'offer-accepted' | 'offer-declined' | 'discount-accepted'>('initial');
+  const [currentScreen, setCurrentScreen] = useState<'initial' | 'job-found' | 'feedback' | 'visa' | 'downsell' | 'offer-accepted' | 'offer-declined' | 'discount-accepted' | 'final-cancellation'>('initial');
+  const [previousScreen, setPreviousScreen] = useState<'initial' | 'job-found' | 'feedback' | 'visa' | 'downsell' | 'offer-accepted' | 'offer-declined' | 'discount-accepted' | 'final-cancellation'>('initial');
   
   // New state for settings toggle
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
 
   // A/B Testing for downsell screen
-  const { variant: downsellVariant, isLoading: isABTestLoading } = useABTest({
-    userId: mockUser.id,
-    testName: 'downsell_offer',
-    variantA: 'show_downsell',
-    variantB: 'skip_downsell'
-  });
+  const { variant: downsellVariant, isLoading: isABTestLoading } = useABTest(
+    mockUser.id,
+    'mock-subscription-id-123' // Mock subscription ID for testing
+  );
 
   // Debug useEffect to monitor state changes
   useEffect(() => {
@@ -80,7 +79,7 @@ export default function ProfilePage() {
     
     // Log A/B test information for debugging
     if (!isABTestLoading) {
-      console.log(`A/B Test Result: User will see ${downsellVariant === 'show_downsell' ? 'downsell screen' : 'skip downsell'}`);
+      console.log(`A/B Test Result: User will see ${downsellVariant === 'A' ? 'downsell screen' : 'skip downsell'}`);
     } else {
       console.log('A/B Test still loading...');
     }
@@ -159,6 +158,12 @@ export default function ProfilePage() {
     setCurrentScreen('downsell');
   };
 
+  const handleBackToOfferDeclined = () => {
+    // Go back to offer-declined screen from final-cancellation
+    setPreviousScreen(currentScreen);
+    setCurrentScreen('offer-declined');
+  };
+
   const handleCloseModal = () => {
     setShowCancellationModal(false);
     setCurrentScreen('initial');
@@ -216,6 +221,8 @@ export default function ProfilePage() {
       setCurrentScreen('offer-declined');
     } else if (previousScreen === 'discount-accepted') {
       setCurrentScreen('discount-accepted');
+    } else if (previousScreen === 'final-cancellation') {
+      setCurrentScreen('final-cancellation');
     } else {
       // Fallback to initial
       setCurrentScreen('initial');
@@ -238,9 +245,9 @@ export default function ProfilePage() {
   // Handler for when user continues from offer declined screen
   const handleOfferDeclinedContinue = () => {
     console.log('User continued from offer declined screen');
-    // Show the discount accepted screen
+    // Show the final cancellation screen (Step 3 of 3)
     setPreviousScreen(currentScreen);
-    setCurrentScreen('discount-accepted');
+    setCurrentScreen('final-cancellation');
   };
 
   // Handler for when user clicks "Land your dream role" from discount accepted screen
@@ -249,6 +256,21 @@ export default function ProfilePage() {
     // Go back to the main initial modal (Yes/No screen)
     setPreviousScreen(currentScreen);
     setCurrentScreen('initial');
+  };
+
+  // Handler for when user gets discount from final cancellation screen
+  const handleGetDiscount = () => {
+    console.log('User chose to get discount from final cancellation screen');
+    // Show the discount accepted screen
+    setPreviousScreen(currentScreen);
+    setCurrentScreen('discount-accepted');
+  };
+
+  // Handler for when user completes cancellation from final cancellation screen
+  const handleCompleteCancellation = () => {
+    console.log('User completed cancellation from final cancellation screen');
+    // TODO: Handle the final cancellation logic
+    setShowCancellationModal(false);
   };
 
   if (loading) {
@@ -541,6 +563,17 @@ export default function ProfilePage() {
         />
       )}
 
+      {showCancellationModal && currentScreen === 'final-cancellation' && (
+        <FinalCancellationScreen
+          onClose={handleCloseModal}
+          onBack={handleBackToOfferDeclined}
+          onGetDiscount={handleGetDiscount}
+          onCompleteCancellation={handleCompleteCancellation}
+          userId={mockUser.id}
+          subscriptionId="mock-subscription-id-123"
+        />
+      )}
+
       {/* Debug Information */}
       {showCancellationModal && (
         <div className="fixed top-4 right-4 bg-black text-white p-4 rounded-lg z-[60] text-xs">
@@ -573,6 +606,12 @@ export default function ProfilePage() {
               className="bg-purple-500 text-white px-2 py-1 rounded text-xs"
             >
               Test Discount Accepted
+            </button>
+            <button 
+              onClick={() => setCurrentScreen('final-cancellation')}
+              className="bg-red-500 text-white px-2 py-1 rounded text-xs"
+            >
+              Test Final Cancellation
             </button>
           </div>
         </div>

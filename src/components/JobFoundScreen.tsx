@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 interface JobFoundScreenProps {
@@ -10,12 +10,22 @@ interface JobFoundScreenProps {
 }
 
 export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFoundScreenProps) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  
   const [formData, setFormData] = useState({
     foundWithMigrateMate: '',
     rolesApplied: '',
     companiesEmailed: '',
     companiesInterviewed: ''
   });
+
+  useEffect(() => {
+    setIsVisible(true);
+    setIsAnimating(true);
+    const timer = setTimeout(() => setIsAnimating(false), 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
@@ -34,40 +44,55 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
                      formData.companiesEmailed && formData.companiesInterviewed;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4 z-50">
-      <div className="bg-white rounded-[20px] w-full max-w-[320px] sm:max-w-[480px] md:max-w-[640px] lg:max-w-[1000px] h-auto min-h-[520px] sm:min-h-[500px] lg:min-h-[500px] max-h-[90vh] flex flex-col lg:flex-row relative overflow-hidden">
-        {/* Top Bar */}
+    <div className="fixed inset-0 flex items-center justify-center p-2 sm:p-4 z-50">
+      {/* Backdrop with fade-in animation */}
+      <div
+        className={`absolute inset-0 bg-black/20 backdrop-blur-sm transition-all duration-500 ${
+          isVisible ? 'opacity-100' : 'opacity-0'
+        }`}
+        onClick={onClose}
+      />
+
+      {/* Modal with slide-up and scale animation */}
+      <div
+        className={`bg-white rounded-[20px] w-full max-w-[320px] sm:max-w-[480px] md:max-w-[640px] lg:max-w-[1000px] h-auto min-h-[520px] sm:min-h-[500px] lg:min-h-[500px] max-h-[90vh] flex flex-col lg:flex-row relative overflow-hidden shadow-2xl transition-all duration-500 transform ${
+          isVisible
+            ? 'translate-y-0 scale-100 opacity-100'
+            : 'translate-y-8 scale-95 opacity-0'
+        }`}
+      >
+        {/* Top Bar - Header */}
         <div className="absolute top-0 left-0 right-0 bg-white border-b border-gray-200 px-3 sm:px-4 lg:px-6 py-3 sm:py-4 flex items-center justify-between z-10">
           {/* Back Button */}
           <button
             onClick={onBack}
-            className="flex items-center text-gray-600 hover:text-gray-800 transition-colors text-xs sm:text-sm lg:text-base"
+            className="flex items-center text-gray-600 hover:text-gray-800 transition-all duration-200 hover:scale-105"
           >
-            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-5 lg:h-5 mr-1 sm:mr-1.5 lg:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            <span className="hidden sm:inline">Back</span>
+            <span className="text-xs sm:text-sm font-medium">Back</span>
           </button>
 
           {/* Title */}
-          <h1 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-800 text-center flex-1 mx-2">Subscription Cancellation</h1>
+          <h1 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-800">Subscription Cancellation</h1>
 
-          {/* Progress Indicator */}
-          <div className="flex items-center space-x-1 sm:space-x-1.5 lg:space-x-2">
+          {/* Progress Indicator - Step 1 of 3 */}
+          <div className="flex items-center space-x-1.5 sm:space-x-2">
             <div className="flex space-x-1">
-              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-600 rounded-full"></div>
-              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-300 rounded-full"></div>
-              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-300 rounded-full"></div>
+              <div className="w-2 h-2 sm:w-3 sm:h-2 bg-blue-600 rounded-sm"></div>
+              <div className="w-2 h-2 sm:w-3 sm:h-2 bg-gray-300 rounded-sm"></div>
+              <div className="w-2 h-2 sm:w-3 sm:h-2 bg-gray-300 rounded-sm"></div>
             </div>
-            <span className="text-xs sm:text-sm text-gray-500 ml-1 sm:ml-1.5 lg:ml-2 hidden sm:inline">Step 1 of 3</span>
+            <span className="text-xs sm:text-sm text-gray-500 ml-1.5 sm:ml-2">Step 1 of 3</span>
           </div>
 
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 flex items-center justify-center text-gray-600 hover:text-gray-800 transition-colors ml-1 sm:ml-2"
+            className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 flex items-center justify-center text-gray-600 hover:text-gray-800 transition-all duration-200 bg-white rounded-full shadow-sm hover:scale-110 hover:bg-gray-50"
           >
-            <svg width="12" height="12" className="sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4" viewBox="0 0 16 16" fill="none">
+            <svg width="14" height="14" className="sm:w-4 sm:h-4 lg:w-4 lg:h-4" viewBox="0 0 16 16" fill="none">
               <path
                 d="M12 4L4 12M4 4L12 12"
                 stroke="currentColor"
@@ -84,27 +109,33 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
           {/* City Skyline Image - Mobile and Tablet */}
           <div className="relative w-full h-40 sm:h-48 rounded-t-[20px] overflow-hidden">
             <Image
-              src="/skyline_image.jpg"
-              alt="City skyline with Empire State Building"
+              src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
+              alt="New York City skyline at twilight with Empire State Building"
               fill
-              className="object-cover object-center"
+              className={`object-cover object-center transition-all duration-700 ${
+                isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'
+              }`}
               priority
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 50vw"
             />
           </div>
 
-          {/* Form Content - Mobile and Tablet with responsive spacing */}
+          {/* Content - Mobile and Tablet with responsive spacing */}
           <div className="flex-1 flex flex-col justify-start px-3 sm:px-4 pt-16 sm:pt-20 pb-4 sm:pb-6 overflow-y-auto">
             <div className="space-y-4 sm:space-y-6">
-              {/* Heading with responsive text sizing */}
-              <div className="space-y-2">
-                <h2 className="text-lg sm:text-xl font-bold text-gray-800 flex items-center">
+              {/* Heading with staggered entrance and responsive text */}
+              <div className={`space-y-2 transition-all duration-500 delay-200 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
+                <h2 className="text-lg sm:text-xl font-bold text-gray-800">
                   Congrats on the new role! 🎉
                 </h2>
               </div>
 
               {/* Question 1 with responsive spacing */}
-              <div className="space-y-2 sm:space-y-3">
+              <div className={`space-y-2 sm:space-y-3 transition-all duration-500 delay-300 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
                 <label className="block">
                   <span className="text-xs sm:text-sm font-medium text-gray-700 mb-2 sm:mb-3 block">
                     Did you find this job with MigrateMate?*
@@ -114,7 +145,7 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
                       onClick={() => handleInputChange('foundWithMigrateMate', 'yes')}
                       className={`w-full py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg border-2 transition-all duration-200 text-sm sm:text-base ${
                         formData.foundWithMigrateMate === 'yes'
-                          ? 'border-blue-500 bg-blue-50 text-blue-700'
+                          ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
                           : 'border-gray-300 text-gray-700 hover:border-gray-400'
                       }`}
                     >
@@ -124,7 +155,7 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
                       onClick={() => handleInputChange('foundWithMigrateMate', 'no')}
                       className={`w-full py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg border-2 transition-all duration-200 text-sm sm:text-base ${
                         formData.foundWithMigrateMate === 'no'
-                          ? 'border-blue-500 bg-blue-50 text-blue-700'
+                          ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
                           : 'border-gray-300 text-gray-700 hover:border-gray-400'
                       }`}
                     >
@@ -135,7 +166,9 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
               </div>
 
               {/* Question 2 with responsive grid */}
-              <div className="space-y-2 sm:space-y-3">
+              <div className={`space-y-2 sm:space-y-3 transition-all duration-500 delay-400 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
                 <label className="block">
                   <span className="text-xs sm:text-sm font-medium text-gray-700 mb-2 sm:mb-3 block">
                     How many roles did you apply for through Migrate Mate?*
@@ -147,7 +180,7 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
                         onClick={() => handleInputChange('rolesApplied', option)}
                         className={`py-2.5 sm:py-3 px-2 sm:px-3 rounded-lg border-2 transition-all duration-200 text-xs sm:text-sm ${
                           formData.rolesApplied === option
-                            ? 'border-blue-500 bg-blue-50 text-blue-700'
+                            ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
                             : 'border-gray-300 text-gray-700 hover:border-gray-400'
                         }`}
                       >
@@ -159,7 +192,9 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
               </div>
 
               {/* Question 3 with responsive grid */}
-              <div className="space-y-2 sm:space-y-3">
+              <div className={`space-y-2 sm:space-y-3 transition-all duration-500 delay-500 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
                 <label className="block">
                   <span className="text-xs sm:text-sm font-medium text-gray-700 mb-2 sm:mb-3 block">
                     How many companies did you email directly?*
@@ -171,7 +206,7 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
                         onClick={() => handleInputChange('companiesEmailed', option)}
                         className={`py-2.5 sm:py-3 px-2 sm:px-3 rounded-lg border-2 transition-all duration-200 text-xs sm:text-sm ${
                           formData.companiesEmailed === option
-                            ? 'border-blue-500 bg-blue-50 text-blue-700'
+                            ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
                             : 'border-gray-300 text-gray-700 hover:border-gray-400'
                         }`}
                       >
@@ -183,7 +218,9 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
               </div>
 
               {/* Question 4 with responsive grid */}
-              <div className="space-y-2 sm:space-y-3">
+              <div className={`space-y-2 sm:space-y-3 transition-all duration-500 delay-600 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
                 <label className="block">
                   <span className="text-xs sm:text-sm font-medium text-gray-700 mb-2 sm:mb-3 block">
                     How many different companies did you interview with?*
@@ -195,7 +232,7 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
                         onClick={() => handleInputChange('companiesInterviewed', option)}
                         className={`py-2.5 sm:py-3 px-2 sm:px-3 rounded-lg border-2 transition-all duration-200 text-xs sm:text-sm ${
                           formData.companiesInterviewed === option
-                            ? 'border-blue-500 bg-blue-50 text-blue-700'
+                            ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
                             : 'border-gray-300 text-gray-700 hover:border-gray-400'
                         }`}
                       >
@@ -207,13 +244,15 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
               </div>
 
               {/* Continue Button with responsive sizing */}
-              <div className="pt-3 sm:pt-4">
+              <div className={`pt-3 sm:pt-4 transition-all duration-500 delay-700 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
                 <button
                   onClick={handleSubmit}
                   disabled={!isFormValid}
                   className={`w-full py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg font-medium transition-all duration-200 text-sm sm:text-base ${
                     isFormValid
-                      ? 'bg-blue-600 text-white hover:bg-blue-700'
+                      ? 'bg-[#996EFF] text-white hover:bg-[#8A5FFF] hover:shadow-md hover:scale-[1.02] active:scale-[0.98]'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
@@ -226,20 +265,24 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
 
         {/* Desktop Layout - Two Columns */}
         <div className="hidden lg:flex flex-1">
-          {/* Left Section - Form */}
-          <div className="flex-1 flex flex-col justify-start px-12 pt-16 pb-6 overflow-y-auto">
+          {/* Left Section - Content (60% width) with staggered animation */}
+          <div className="w-[60%] flex flex-col justify-start px-12 pt-16 pb-6 overflow-y-auto">
             <div className="space-y-6">
-              {/* Heading */}
-              <div className="space-y-2">
-                <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 flex items-center">
+              {/* Heading with staggered entrance */}
+              <div className={`space-y-2 transition-all duration-500 delay-200 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
+                <h2 className="text-2xl lg:text-3xl font-bold text-gray-800">
                   Congrats on the new role! 🎉
                 </h2>
               </div>
 
-              {/* Question 1 */}
-              <div className="space-y-3">
+              {/* Question 1 with delay */}
+              <div className={`space-y-3 transition-all duration-500 delay-300 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
                 <label className="block">
-                  <span className="text-sm font-medium text-gray-700 mb-3 block">
+                  <span className="text-base lg:text-lg font-medium text-gray-700 mb-3 block">
                     Did you find this job with MigrateMate?*
                   </span>
                   <div className="flex space-x-3">
@@ -247,7 +290,7 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
                       onClick={() => handleInputChange('foundWithMigrateMate', 'yes')}
                       className={`flex-1 py-3 px-4 rounded-lg border-2 transition-all duration-200 ${
                         formData.foundWithMigrateMate === 'yes'
-                          ? 'border-blue-500 bg-blue-50 text-blue-700'
+                          ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
                           : 'border-gray-300 text-gray-700 hover:border-gray-400'
                       }`}
                     >
@@ -257,7 +300,7 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
                       onClick={() => handleInputChange('foundWithMigrateMate', 'no')}
                       className={`flex-1 py-3 px-4 rounded-lg border-2 transition-all duration-200 ${
                         formData.foundWithMigrateMate === 'no'
-                          ? 'border-blue-500 bg-blue-50 text-blue-700'
+                          ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
                           : 'border-gray-300 text-gray-700 hover:border-gray-400'
                       }`}
                     >
@@ -267,10 +310,12 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
                 </label>
               </div>
 
-              {/* Question 2 */}
-              <div className="space-y-3">
+              {/* Question 2 with delay */}
+              <div className={`space-y-3 transition-all duration-500 delay-400 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
                 <label className="block">
-                  <span className="text-sm font-medium text-gray-700 mb-3 block">
+                  <span className="text-base lg:text-lg font-medium text-gray-700 mb-3 block">
                     How many roles did you apply for through Migrate Mate?*
                   </span>
                   <div className="grid grid-cols-2 gap-3">
@@ -280,7 +325,7 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
                         onClick={() => handleInputChange('rolesApplied', option)}
                         className={`py-3 px-4 rounded-lg border-2 transition-all duration-200 ${
                           formData.rolesApplied === option
-                            ? 'border-blue-500 bg-blue-50 text-blue-700'
+                            ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
                             : 'border-gray-300 text-gray-700 hover:border-gray-400'
                         }`}
                       >
@@ -291,10 +336,12 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
                 </label>
               </div>
 
-              {/* Question 3 */}
-              <div className="space-y-3">
+              {/* Question 3 with delay */}
+              <div className={`space-y-3 transition-all duration-500 delay-500 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
                 <label className="block">
-                  <span className="text-sm font-medium text-gray-700 mb-3 block">
+                  <span className="text-base lg:text-lg font-medium text-gray-700 mb-3 block">
                     How many companies did you email directly?*
                   </span>
                   <div className="grid grid-cols-2 gap-3">
@@ -304,7 +351,7 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
                         onClick={() => handleInputChange('companiesEmailed', option)}
                         className={`py-3 px-4 rounded-lg border-2 transition-all duration-200 ${
                           formData.companiesEmailed === option
-                            ? 'border-blue-500 bg-blue-50 text-blue-700'
+                            ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
                             : 'border-gray-300 text-gray-700 hover:border-gray-400'
                         }`}
                       >
@@ -315,10 +362,12 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
                 </label>
               </div>
 
-              {/* Question 4 */}
-              <div className="space-y-3">
+              {/* Question 4 with delay */}
+              <div className={`space-y-3 transition-all duration-500 delay-600 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
                 <label className="block">
-                  <span className="text-sm font-medium text-gray-700 mb-3 block">
+                  <span className="text-base lg:text-lg font-medium text-gray-700 mb-3 block">
                     How many different companies did you interview with?*
                   </span>
                   <div className="grid grid-cols-2 gap-3">
@@ -328,7 +377,7 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
                         onClick={() => handleInputChange('companiesInterviewed', option)}
                         className={`py-3 px-4 rounded-lg border-2 transition-all duration-200 ${
                           formData.companiesInterviewed === option
-                            ? 'border-blue-500 bg-blue-50 text-blue-700'
+                            ? 'border-[#996EFF] bg-[#996EFF]/5 text-[#996EFF]'
                             : 'border-gray-300 text-gray-700 hover:border-gray-400'
                         }`}
                       >
@@ -339,14 +388,16 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
                 </label>
               </div>
 
-              {/* Continue Button */}
-              <div className="pt-4">
+              {/* Continue Button with enhanced hover effects */}
+              <div className={`pt-4 transition-all duration-500 delay-700 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
                 <button
                   onClick={handleSubmit}
                   disabled={!isFormValid}
                   className={`w-full py-4 px-6 rounded-lg font-medium transition-all duration-200 ${
                     isFormValid
-                      ? 'bg-blue-600 text-white hover:bg-blue-700'
+                      ? 'bg-[#996EFF] text-white hover:bg-[#8A5FFF] hover:shadow-md hover:scale-[1.02] active:scale-[0.98]'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
@@ -356,17 +407,19 @@ export default function JobFoundScreen({ onClose, onBack, onContinue }: JobFound
             </div>
           </div>
 
-          {/* Right Section - City Skyline Image */}
-          <div className="flex-1 relative min-h-[500px] w-full">
-            <div className="w-full h-full rounded-r-[20px] overflow-hidden">
-              <Image
-                src="/skyline_image.jpg"
-                alt="City skyline with Empire State Building"
-                fill
-                className="object-cover object-center"
-                priority
-                sizes="50vw"
-              />
+          {/* Right Section - City Skyline Image (40% width) with proper containment */}
+          <div className="w-[40%] flex items-center justify-center px-8 py-8">
+            <div className="relative w-full max-w-[320px] h-[400px] rounded-[20px] overflow-hidden shadow-lg">
+                              <Image
+                  src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
+                  alt="New York City skyline at twilight with Empire State Building"
+                  fill
+                  className={`object-cover object-center transition-all duration-700 ${
+                    isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'
+                  }`}
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 320px"
+                />
             </div>
           </div>
         </div>

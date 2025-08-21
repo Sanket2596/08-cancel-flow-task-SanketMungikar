@@ -93,8 +93,8 @@ export default function DownsellScreen({
           {/* City Skyline Image - Mobile and Tablet */}
           <div className="relative w-full h-40 sm:h-48 rounded-t-[20px] overflow-hidden">
             <Image
-              src="/skyline_image.jpg"
-              alt="City skyline with Empire State Building"
+              src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
+              alt="New York City skyline at twilight with Empire State Building"
               fill
               className={`object-cover object-center transition-all duration-700 ${
                 isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'
@@ -105,9 +105,9 @@ export default function DownsellScreen({
           </div>
 
           {/* Content - Mobile and Tablet with responsive spacing */}
-          <div className="flex-1 flex flex-col justify-start px-3 sm:px-4 pt-16 sm:pt-20 pb-4 sm:pb-6">
+          <div className="flex-1 flex flex-col justify-start px-3 sm:px-4 pt-16 sm:pt-20 pb-4 sm:pb-6 overflow-y-auto">
             <div className="space-y-4 sm:space-y-6">
-              {/* Heading with staggered entrance and responsive text */}
+              {/* Main heading with staggered entrance and responsive text */}
               <div className={`space-y-2 transition-all duration-500 delay-200 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
@@ -116,57 +116,56 @@ export default function DownsellScreen({
                 </h2>
               </div>
 
-              {/* Descriptive Text with delay and responsive sizing */}
+              {/* Supporting text with delay and responsive sizing */}
               <p className={`text-sm sm:text-base text-gray-600 leading-relaxed transition-all duration-500 delay-300 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
                 We've been there and we're here to help you.
               </p>
 
-              {/* Downsell Offer Box with delay and responsive sizing */}
-              <div className={`transition-all duration-500 delay-400 ${
+              {/* Offer box with delay and responsive sizing */}
+              <div className={`bg-[#F8F5FF] rounded-lg p-4 sm:p-5 transition-all duration-500 delay-400 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                <div className="bg-purple-50 rounded-lg p-4 sm:p-6 space-y-4 sm:space-y-6">
-                  {/* Offer Text */}
-                  <div className="text-center">
-                    <p className="text-sm sm:text-base text-gray-800">
-                      Here's <span className="font-bold">50% off</span> until you find a job.
-                    </p>
-                  </div>
-
-                  {/* Pricing Display */}
-                  <div className="flex items-center justify-center space-x-3">
-                    <span className="text-2xl sm:text-3xl font-bold text-[#8952fc]">$12.50/month</span>
-                    <span className="text-sm sm:text-base text-gray-500 line-through">$25/month</span>
-                  </div>
-
-                  {/* Call-to-Action Button */}
-                  <button
-                    onClick={onAcceptDownsell}
-                    className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-green-600 text-white rounded-lg font-medium transition-all duration-300 hover:bg-green-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base"
-                  >
-                    Get 50% off
-                  </button>
-
-                  {/* Disclaimer */}
-                  <p className="text-xs sm:text-sm text-gray-500 text-center">
-                    You won't be charged until your next billing date.
+                <div className="text-center space-y-2 sm:space-y-3">
+                  <p className="text-sm sm:text-base text-gray-700">
+                    Here's <span className="font-bold">50% off</span> until you find a job.
+                  </p>
+                  <p className="text-sm sm:text-base text-gray-700">
+                    <span className="text-2xl sm:text-3xl font-bold text-[#996EFF]">$12.50</span>
+                    <span className="text-sm sm:text-base text-gray-500 line-through ml-2">$25</span>
+                    <span className="text-sm sm:text-base text-gray-700">/month</span>
                   </p>
                 </div>
               </div>
 
-              {/* Secondary Action Button with responsive sizing */}
-              <div className={`pt-2 sm:pt-3 transition-all duration-500 delay-500 ${
+              {/* Action Buttons with responsive sizing */}
+              <div className={`space-y-3 pt-2 sm:pt-3 transition-all duration-500 delay-600 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
+                {/* Primary Button: Get 50% off */}
+                <button
+                  onClick={onAcceptDownsell}
+                  className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-green-600 text-white rounded-lg font-medium transition-all duration-300 hover:bg-green-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base"
+                >
+                  Get 50% off
+                </button>
+
+                {/* Secondary Button: No thanks */}
                 <button
                   onClick={onDeclineDownsell}
-                  className="w-full py-2.5 sm:py-3 px-4 sm:px-6 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-medium transition-all duration-300 hover:bg-gray-50 hover:border-gray-400 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base"
+                  className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-medium transition-all duration-300 hover:bg-gray-50 hover:border-gray-400 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base"
                 >
                   No thanks
                 </button>
               </div>
+
+              {/* Disclaimer with delay and responsive sizing */}
+              <p className={`text-xs sm:text-sm text-gray-500 text-center transition-all duration-500 delay-700 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
+                You wont be charged until your next billing date.
+              </p>
             </div>
           </div>
         </div>
@@ -174,9 +173,9 @@ export default function DownsellScreen({
         {/* Desktop Layout - Two Columns */}
         <div className="hidden lg:flex flex-1">
           {/* Left Section - Content (60% width) with staggered animation */}
-          <div className="w-[60%] flex flex-col justify-center px-12 pt-16 pb-6">
+          <div className="w-[60%] flex flex-col justify-start px-12 pt-16 pb-6 overflow-y-auto">
             <div className="space-y-6">
-              {/* Heading with staggered entrance */}
+              {/* Main heading with staggered entrance */}
               <div className={`space-y-2 transition-all duration-500 delay-200 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
@@ -185,50 +184,42 @@ export default function DownsellScreen({
                 </h2>
               </div>
 
-              {/* Descriptive Text with delay */}
+              {/* Supporting text with delay */}
               <p className={`text-base lg:text-lg text-gray-600 leading-relaxed max-w-md transition-all duration-500 delay-300 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
                 We've been there and we're here to help you.
               </p>
 
-              {/* Downsell Offer Box with delay */}
-              <div className={`transition-all duration-500 delay-400 ${
+              {/* Offer box with delay */}
+              <div className={`bg-[#F8F5FF] rounded-lg p-6 transition-all duration-500 delay-400 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                <div className="bg-purple-50 rounded-lg p-6 space-y-6">
-                  {/* Offer Text */}
-                  <div className="text-center">
-                    <p className="text-lg text-gray-800">
-                      Here's <span className="font-bold">50% off</span> until you find a job.
-                    </p>
-                  </div>
-
-                  {/* Pricing Display */}
-                  <div className="flex items-center justify-center space-x-4">
-                    <span className="text-4xl font-bold text-[#8952fc]">$12.50/month</span>
-                    <span className="text-lg text-gray-500 line-through">$25/month</span>
-                  </div>
-
-                  {/* Call-to-Action Button */}
-                  <button
-                    onClick={onAcceptDownsell}
-                    className="w-full py-4 px-6 bg-green-600 text-white rounded-lg font-medium transition-all duration-300 hover:bg-green-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    Get 50% off
-                  </button>
-
-                  {/* Disclaimer */}
-                  <p className="text-sm text-gray-500 text-center">
-                    You won't be charged until your next billing date.
+                <div className="text-center space-y-3">
+                  <p className="text-base lg:text-lg text-gray-700">
+                    Here's <span className="font-bold">50% off</span> until you find a job.
+                  </p>
+                  <p className="text-base lg:text-lg text-gray-700">
+                    <span className="text-3xl lg:text-4xl font-bold text-[#996EFF]">$12.50</span>
+                    <span className="text-base lg:text-lg text-gray-500 line-through ml-3">$25</span>
+                    <span className="text-base lg:text-lg text-gray-700">/month</span>
                   </p>
                 </div>
               </div>
 
-              {/* Secondary Action Button with enhanced hover effects */}
-              <div className={`pt-4 transition-all duration-500 delay-500 ${
+              {/* Action Buttons with enhanced hover effects */}
+              <div className={`space-y-4 pt-4 transition-all duration-500 delay-600 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
+                {/* Primary Button: Get 50% off */}
+                <button
+                  onClick={onAcceptDownsell}
+                  className="w-full py-4 px-6 bg-green-600 text-white rounded-lg font-medium transition-all duration-300 hover:bg-green-700 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  Get 50% off
+                </button>
+
+                {/* Secondary Button: No thanks */}
                 <button
                   onClick={onDeclineDownsell}
                   className="w-full py-4 px-6 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-medium transition-all duration-300 hover:bg-gray-50 hover:border-gray-400 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
@@ -236,6 +227,13 @@ export default function DownsellScreen({
                   No thanks
                 </button>
               </div>
+
+              {/* Disclaimer with delay */}
+              <p className={`text-sm text-gray-500 text-center transition-all duration-500 delay-700 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
+                You wont be charged until your next billing date.
+              </p>
             </div>
           </div>
 
@@ -243,8 +241,8 @@ export default function DownsellScreen({
           <div className="w-[40%] flex items-center justify-center px-8 py-8">
             <div className="relative w-full max-w-[320px] h-[400px] rounded-[20px] overflow-hidden shadow-lg">
               <Image
-                src="/skyline_image.jpg"
-                alt="City skyline with Empire State Building"
+                src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
+                alt="New York City skyline at twilight with Empire State Building"
                 fill
                 className={`object-cover object-center transition-all duration-700 ${
                   isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'
