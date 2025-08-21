@@ -107,7 +107,7 @@ export default function CancellationModal({
             {/* City Skyline Image - Mobile and Tablet */}
             <div className="relative w-full h-40 sm:h-48 rounded-t-[20px] overflow-hidden">
               <Image
-                src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
+                src="/-wagner-fT6-YkB0nfg-unsplash.jpg"
                 alt="New York City skyline at twilight with Empire State Building"
                 fill
                 className={`object-cover object-center transition-all duration-700 ${

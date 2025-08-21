@@ -21,7 +21,7 @@ export default function VisaScreen({
   const [showCompletionScreen, setShowCompletionScreen] = useState(false);
   const [needsVisaHelp, setNeedsVisaHelp] = useState<boolean>(false);
 
-  // Form validation: requires immigration lawyer selection and visa type (always required now)
+  // Form validation: requires immigration lawyer selection and visa type for both yes/no
   const isFormValid = hasImmigrationLawyer !== '' && visaType.trim().length > 0;
 
   useEffect(() => {
@@ -373,26 +373,36 @@ export default function VisaScreen({
           {/* Content - Mobile and Tablet with responsive spacing */}
           <div className="flex-1 flex flex-col justify-start px-3 sm:px-4 pt-16 sm:pt-20 pb-4 sm:pb-6 overflow-y-auto">
             <div className="space-y-4 sm:space-y-6">
-              {/* Heading with staggered entrance and responsive text */}
-              <div className={`space-y-2 transition-all duration-500 delay-200 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-              }`}>
-                <h2 className="text-lg sm:text-xl font-bold text-gray-800">
-                  Do you need help with visa support?
-                </h2>
-              </div>
+                             {/* Heading with staggered entrance and responsive text */}
+               <div className={`space-y-2 transition-all duration-500 delay-200 ${
+                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+               }`}>
+                 <h2 className="text-lg sm:text-xl font-bold text-gray-800">
+                   You landed the job!
+                 </h2>
+                 <h2 className="text-lg sm:text-xl font-bold italic text-gray-800">
+                   That's what we live for.
+                 </h2>
+               </div>
 
-              {/* Introductory text with delay and responsive sizing */}
-              <p className={`text-sm sm:text-base text-gray-600 leading-relaxed transition-all duration-500 delay-300 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-              }`}>
-                We understand that visa processes can be complex. Let us know if you need assistance.
-              </p>
+               {/* Introductory text with delay and responsive sizing */}
+               <p className={`text-sm sm:text-base text-gray-600 leading-relaxed transition-all duration-500 delay-300 ${
+                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+               }`}>
+                 Even if it wasn't through Migrate Mate, let us help get your visa sorted.
+               </p>
 
-              {/* Radio Button Options with responsive sizing */}
-              <div className={`space-y-3 transition-all duration-500 delay-400 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-              }`}>
+               {/* Question text with delay and responsive sizing */}
+               <p className={`text-sm sm:text-base text-gray-600 leading-relaxed transition-all duration-500 delay-400 ${
+                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+               }`}>
+                 Is your company providing an immigration lawyer to help with your visa?
+               </p>
+
+                             {/* Radio Button Options with responsive sizing */}
+               <div className={`space-y-3 transition-all duration-500 delay-500 ${
+                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+               }`}>
                 {hasImmigrationLawyer !== 'no' && (
                   <label className="flex items-center space-x-3 p-3 sm:p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:border-gray-300 hover:bg-gray-50">
                     <input
@@ -432,21 +442,23 @@ export default function VisaScreen({
                 )}
               </div>
 
-              {/* Visa Type Question - Always visible */}
-              <div className={`space-y-2 sm:space-y-3 transition-all duration-500 delay-500 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-              }`}>
-                <label className="text-xs sm:text-sm font-medium text-gray-700">
-                  What type of visa are you applying for?*
-                </label>
-                <input
-                  type="text"
-                  value={visaType}
-                  onChange={handleVisaTypeChange}
-                  placeholder="e.g., H-1B, L-1, O-1, etc."
-                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-black border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#996EFF] focus:border-[#996EFF] transition-all duration-200"
-                />
-              </div>
+              {/* Visa Type Question - Only visible when "No" is selected */}
+              {hasImmigrationLawyer === 'no' && (
+                <div className={`space-y-2 sm:space-y-3 transition-all duration-500 delay-500 ${
+                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                }`}>
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                    We can connect you with one of our trusted partners. Which visa would you like to apply for?*
+                  </p>
+                  <input
+                    type="text"
+                    value={visaType}
+                    onChange={handleVisaTypeChange}
+                    placeholder="e.g., H-1B, L-1, O-1, etc."
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-black border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#996EFF] focus:border-[#996EFF] transition-all duration-200"
+                  />
+                </div>
+              )}
 
               {/* Continue Button with responsive sizing */}
               <div className={`pt-2 sm:pt-3 transition-all duration-500 delay-600 ${
@@ -461,7 +473,7 @@ export default function VisaScreen({
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  Continue
+                  Complete cancellation
                 </button>
               </div>
             </div>
@@ -478,15 +490,15 @@ export default function VisaScreen({
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-800">
-                  Do you need help with visa support?
+                  We helped you land the job, now let's help you secure your visa.
                 </h2>
               </div>
 
-              {/* Introductory text with delay */}
+              {/* Question text with delay */}
               <p className={`text-base lg:text-lg text-gray-600 leading-relaxed max-w-md transition-all duration-500 delay-300 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
-                We understand that visa processes can be complex. Let us know if you need assistance.
+                Is your company providing an immigration lawyer to help with your visa?
               </p>
 
               {/* Radio Button Options with delay */}
@@ -532,21 +544,23 @@ export default function VisaScreen({
                 )}
               </div>
 
-              {/* Visa Type Question - Always visible */}
-              <div className={`space-y-3 transition-all duration-500 delay-500 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-              }`}>
-                <label className="text-base lg:text-lg font-medium text-gray-700">
-                  What type of visa are you applying for?*
-                </label>
-                <input
-                  type="text"
-                  value={visaType}
-                  onChange={handleVisaTypeChange}
-                  placeholder="e.g., H-1B, L-1, O-1, etc."
-                  className="w-full px-4 py-3 text-base lg:text-lg text-black border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#996EFF] focus:border-[#996EFF] transition-all duration-200"
-                />
-              </div>
+              {/* Visa Type Question - Only visible when "No" is selected */}
+              {hasImmigrationLawyer === 'no' && (
+                <div className={`space-y-3 transition-all duration-500 delay-500 ${
+                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                }`}>
+                  <p className="text-base lg:text-lg text-gray-600 leading-relaxed max-w-md">
+                    We can connect you with one of our trusted partners. Which visa would you like to apply for?*
+                  </p>
+                  <input
+                    type="text"
+                    value={visaType}
+                    onChange={handleVisaTypeChange}
+                    placeholder="e.g., H-1B, L-1, O-1, etc."
+                    className="w-full px-4 py-3 text-base lg:text-lg text-black border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#996EFF] focus:border-[#996EFF] transition-all duration-200"
+                  />
+                </div>
+              )}
 
               {/* Continue Button with enhanced hover effects */}
               <div className={`pt-4 transition-all duration-500 delay-600 ${
@@ -561,7 +575,7 @@ export default function VisaScreen({
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  Continue
+                  Complete cancellation
                 </button>
               </div>
             </div>
