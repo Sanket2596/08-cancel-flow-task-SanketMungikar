@@ -215,7 +215,7 @@ export default function CancellationModal({
             <div className="w-[40%] flex items-center justify-center px-8 py-8">
               <div className="relative w-full max-w-[320px] h-[400px] rounded-[20px] overflow-hidden shadow-lg">
                 <Image
-                  src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
+                  src="/empire-state-compressed.jpg"
                   alt="New York City skyline at twilight with Empire State Building"
                   fill
                   className={`object-cover object-center transition-all duration-700 ${

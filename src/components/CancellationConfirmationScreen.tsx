@@ -110,8 +110,8 @@ export default function CancellationConfirmationScreen({
           {/* City Skyline Image - Mobile and Tablet */}
           <div className="relative w-full h-40 sm:h-48 rounded-t-[20px] overflow-hidden">
             <Image
-              src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
-              alt="New York City skyline at twilight with Empire State Building"
+              src="/empire-state-compressed.jpg"
+              alt="New York City skyline at twilight with Empire State Building prominently featured"
               fill
               className={`object-cover object-center transition-all duration-700 ${
                 isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'
@@ -222,8 +222,8 @@ export default function CancellationConfirmationScreen({
           <div className="w-[40%] flex items-center justify-center px-8 py-8">
             <div className="relative w-full max-w-[320px] h-[404px] rounded-[20px] overflow-hidden shadow-lg">
               <Image
-                src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
-                alt="New York City skyline at twilight with Empire State Building"
+                src="/empire-state-compressed.jpg"
+                alt="New York City skyline at twilight with Empire State Building prominently featured"
                 fill
                 className={`object-cover object-center transition-all duration-700 ${
                   isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'

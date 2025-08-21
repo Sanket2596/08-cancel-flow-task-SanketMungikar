@@ -75,7 +75,7 @@ export default function VisaScreen({
         
         {/* Modal with slide-up and scale animation */}
         <div 
-          className={`bg-white rounded-[20px] w-full max-w-[320px] sm:max-w-[480px] md:max-w-[640px] lg:max-w-[1000px] h-auto min-h-[371px] sm:min-h-[400px] lg:min-h-[450px] max-h-[90vh] flex flex-col lg:flex-row relative overflow-hidden shadow-2xl transition-all duration-500 transform ${
+          className={`bg-white rounded-[20px] w-full max-w-[320px] sm:max-w-[480px] md:max-w-[640px] lg:max-w-[1000px] h-auto min-h-[400px] sm:min-h-[450px] lg:min-h-[500px] max-h-[90vh] flex flex-col lg:flex-row relative overflow-hidden shadow-2xl transition-all duration-500 transform ${
             isVisible 
               ? 'translate-y-0 scale-100 opacity-100' 
               : 'translate-y-8 scale-95 opacity-0'
@@ -124,74 +124,74 @@ export default function VisaScreen({
             </button>
           </div>
 
-          {/* Mobile and Tablet Layout - Single Column */}
-          <div className="lg:hidden flex flex-col h-full">
-            {/* City Skyline Image - Mobile and Tablet */}
-            <div className="relative w-full h-40 sm:h-48 rounded-t-[20px] overflow-hidden">
-              <Image
-                src="/skyline_image.jpg"
-                alt="City skyline with Empire State Building"
-                fill
-                className={`object-cover object-center transition-all duration-700 ${
-                  isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'
-                }`}
-                priority
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
+                    {/* Mobile and Tablet Layout - Single Column */}
+        <div className="lg:hidden flex flex-col h-full">
+          {/* City Skyline Image - Mobile and Tablet */}
+          <div className="relative w-full h-40 sm:h-48 rounded-t-[20px] overflow-hidden">
+            <Image
+              src="/empire-state-compressed.jpg"
+              alt="City skyline with Empire State Building"
+              fill
+              className={`object-cover object-center transition-all duration-700 ${
+                isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'
+              }`}
+              priority
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 50vw"
+            />
+          </div>
 
-            {/* Content - Mobile and Tablet with responsive spacing */}
-            <div className="flex-1 flex flex-col justify-start px-3 sm:px-4 pt-16 sm:pt-20 pb-4 sm:pb-6">
-              <div className="space-y-4 sm:space-y-6">
-                {/* Heading with staggered entrance and responsive text */}
-                <div className={`space-y-2 transition-all duration-500 delay-200 ${
-                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                }`}>
-                  <h2 className="text-lg sm:text-xl font-bold text-gray-800">
-                    {needsVisaHelp 
-                      ? "Your cancellation's all sorted, mate, no more charges."
-                      : "All done, your cancellation's been processed."
-                    }
-                  </h2>
+                     {/* Content - Mobile and Tablet with responsive spacing */}
+           <div className="flex-1 flex flex-col justify-start px-3 sm:px-4 pt-24 sm:pt-28 pb-4 sm:pb-6">
+            <div className="space-y-4 sm:space-y-6">
+              {/* Heading with staggered entrance and responsive text */}
+              <div className={`space-y-2 transition-all duration-500 delay-200 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
+                                 <h2 className="text-lg sm:text-xl font-bold text-gray-800 leading-tight">
+                   Your cancellation's all sorted, mate, no more charges.
+                 </h2>
+              </div>
+
+              {/* Simple completion message */}
+              <div className={`transition-all duration-500 delay-300 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
+                <div className="space-y-3 text-base text-gray-700 pt-2">
+                  <p>We're stoked to hear you've landed a job and sorted your visa.</p>
+                  <p>Big congrats from the team. 🙌</p>
                 </div>
+              </div>
 
-                {/* Conditional Content based on visa help needs */}
-                {needsVisaHelp ? (
-                  /* Contact Card with Mihailo Bozic - when visa help is needed */
-                  <div className={`transition-all duration-500 delay-300 ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                  }`}>
-                    <div className="bg-gray-100 rounded-lg p-6 space-y-4">
-                      <div className="flex items-center space-x-4">
-                        <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center">
-                          <span className="text-white font-semibold text-2xl">M</span>
-                        </div>
-                        <div>
-                          <p className="font-semibold text-gray-800 text-lg">Mihailo Bozic</p>
-                          <p className="text-base text-gray-600">mihailo@migratemate.co</p>
-                        </div>
-                      </div>
-                      <div className="space-y-3 text-base text-gray-700">
-                        <p>I'll be reaching out soon to help with the visa side of things.</p>
-                        <p>We've got your back, whether it's questions, paperwork, or just figuring out your options.</p>
-                        <p>Keep an eye on your inbox, I'll be in touch <span className="underline">shortly</span>.</p>
-                      </div>
+              {/* Mihailo Contact Information */}
+              <div className={`transition-all duration-500 delay-400 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}>
+                <div className="bg-gray-100 rounded-lg p-4 space-y-3 mt-2">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 rounded-full overflow-hidden">
+                      <Image
+                        src="/mihailo-profile.jpeg"
+                        alt="Mihailo Bozic"
+                        width={48}
+                        height={48}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-800 text-sm">Mihailo Bozic</p>
+                      <p className="text-xs text-gray-600">mihailo@migratemate.co</p>
                     </div>
                   </div>
-                ) : (
-                  /* Simple completion message - when no visa help is needed */
-                  <div className={`transition-all duration-500 delay-300 ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                  }`}>
-                    <div className="space-y-3 text-base text-gray-700">
-                      <p>We're stoked to hear you've landed a job and sorted your visa.</p>
-                      <p>Big congrats from the team. 🙌</p>
-                    </div>
+                  <div className="space-y-2 text-xs text-gray-700">
+                    <p>I'll be reaching out soon to help with the visa side of things.</p>
+                    <p>We've got your back, whether it's questions, paperwork, or just figuring out your options.</p>
+                    <p>Keep an eye on your inbox, I'll be in touch <span className="underline">shortly</span>.</p>
                   </div>
-                )}
+                </div>
+              </div>
 
                 {/* Finish Button with responsive sizing */}
-                <div className={`pt-3 sm:pt-4 transition-all duration-500 delay-400 ${
+                <div className={`pt-3 sm:pt-4 transition-all duration-500 delay-500 ${
                   isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 }`}>
                   <button
@@ -207,58 +207,58 @@ export default function VisaScreen({
 
           {/* Desktop Layout - Two Columns */}
           <div className="hidden lg:flex flex-1">
-            {/* Left Section - Content (60% width) with staggered animation */}
-            <div className="w-[60%] flex flex-col justify-center px-12 py-8">
+                         {/* Left Section - Content (60% width) with staggered animation */}
+             <div className="w-[60%] flex flex-col justify-center px-12 py-16">
               <div className="space-y-6">
                 {/* Heading with staggered entrance */}
                 <div className={`space-y-2 transition-all duration-500 delay-200 ${
                   isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 }`}>
-                  <h2 className="text-2xl lg:text-3xl font-bold text-gray-800">
-                    {needsVisaHelp 
-                      ? "Your cancellation's all sorted, mate, no more charges."
-                      : "All done, your cancellation's been processed."
-                    }
+                  <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 leading-tight">
+                    Your cancellation's all sorted, mate, no more charges.
                   </h2>
                 </div>
 
-                {/* Conditional Content based on visa help needs */}
-                {needsVisaHelp ? (
-                  /* Contact Card with Mihailo Bozic - when visa help is needed */
-                  <div className={`transition-all duration-500 delay-300 ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                  }`}>
-                    <div className="bg-gray-100 rounded-lg p-6 space-y-4">
-                      <div className="flex items-center space-x-4">
-                        <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center">
-                          <span className="text-white font-semibold text-2xl">M</span>
-                        </div>
-                        <div>
-                          <p className="font-semibold text-gray-800 text-lg">Mihailo Bozic</p>
-                          <p className="text-base text-gray-600">mihailo@migratemate.co</p>
-                        </div>
+                {/* Simple completion message */}
+                <div className={`transition-all duration-500 delay-300 ${
+                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                }`}>
+                  <div className="space-y-3 text-base text-gray-700 pt-2">
+                    <p>We're stoked to hear you've landed a job and sorted your visa.</p>
+                    <p>Big congrats from the team. 🙌</p>
+                  </div>
+                </div>
+
+                {/* Mihailo Contact Information */}
+                <div className={`transition-all duration-500 delay-400 ${
+                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                }`}>
+                  <div className="bg-gray-100 rounded-lg p-4 space-y-3 mt-2">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-12 h-12 rounded-full overflow-hidden">
+                        <Image
+                          src="/mihailo-profile.jpeg"
+                          alt="Mihailo Bozic"
+                          width={48}
+                          height={48}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-                      <div className="space-y-3 text-base text-gray-700">
-                        <p>I'll be reaching out soon to help with the visa side of things.</p>
-                        <p>We've got your back, whether it's questions, paperwork, or just figuring out your options.</p>
-                        <p>Keep an eye on your inbox, I'll be in touch <span className="underline">shortly</span>.</p>
+                      <div>
+                        <p className="font-semibold text-gray-800 text-sm">Mihailo Bozic</p>
+                        <p className="text-xs text-gray-600">mihailo@migratemate.co</p>
                       </div>
                     </div>
-                  </div>
-                ) : (
-                  /* Simple completion message - when no visa help is needed */
-                  <div className={`transition-all duration-500 delay-300 ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                  }`}>
-                    <div className="space-y-3 text-base text-gray-700">
-                      <p>We're stoked to hear you've landed a job and sorted your visa.</p>
-                      <p>Big congrats from the team. 🙌</p>
+                    <div className="space-y-2 text-xs text-gray-700">
+                      <p>I'll be reaching out soon to help with the visa side of things.</p>
+                      <p>We've got your back, whether it's questions, paperwork, or just figuring out your options.</p>
+                      <p>Keep an eye on your inbox, I'll be in touch <span className="underline">shortly</span>.</p>
                     </div>
                   </div>
-                )}
+                </div>
 
                 {/* Finish Button with responsive sizing */}
-                <div className={`pt-3 sm:pt-4 transition-all duration-500 delay-400 ${
+                <div className={`pt-3 sm:pt-4 transition-all duration-500 delay-500 ${
                   isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 }`}>
                   <button
@@ -275,7 +275,7 @@ export default function VisaScreen({
             <div className="w-[40%] flex items-center justify-center px-8 py-8">
               <div className="relative w-full max-w-[320px] h-[400px] rounded-[20px] overflow-hidden shadow-lg">
                 <Image
-                  src="/skyline_image.jpg"
+                  src="/empire-state-compressed.jpg"
                   alt="City skyline with Empire State Building"
                   fill
                   className={`object-cover object-center transition-all duration-700 ${
@@ -359,7 +359,7 @@ export default function VisaScreen({
           {/* City Skyline Image - Mobile and Tablet */}
           <div className="relative w-full h-40 sm:h-48 rounded-t-[20px] overflow-hidden">
             <Image
-              src="/skyline_image.jpg"
+              src="/empire-state-image.jpg"
               alt="City skyline with Empire State Building"
               fill
               className={`object-cover object-center transition-all duration-700 ${
@@ -571,7 +571,7 @@ export default function VisaScreen({
           <div className="w-[40%] flex items-center justify-center px-8 py-8">
             <div className="relative w-full max-w-[320px] h-[400px] rounded-[20px] overflow-hidden shadow-lg">
               <Image
-                src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
+                src="/empire-state-compressed.jpg"
                 alt="New York City skyline at twilight with Empire State Building"
                 fill
                 className={`object-cover object-center transition-all duration-700 ${

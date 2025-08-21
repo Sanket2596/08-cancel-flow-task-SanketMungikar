@@ -203,7 +203,7 @@ export default function OfferAcceptedScreen({
           <div className="w-[40%] flex items-center justify-center px-8 py-8">
             <div className="relative w-full max-w-[320px] h-[400px] rounded-[20px] overflow-hidden shadow-lg">
               <Image
-                src="/skyline_image.jpg"
+                src="/empire-state-compressed.jpg"
                 alt="City skyline with Empire State Building"
                 fill
                 className={`object-cover object-center transition-all duration-700 ${

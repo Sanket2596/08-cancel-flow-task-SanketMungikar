@@ -107,7 +107,7 @@ export default function OfferDeclinedScreen({
           {/* City Skyline Image - Mobile and Tablet */}
           <div className="relative w-full h-40 sm:h-48 rounded-t-[20px] overflow-hidden">
             <Image
-              src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
+              src="/empire-state-compressed.jpg"
               alt="New York City skyline at twilight with Empire State Building"
               fill
               className={`object-cover object-center transition-all duration-700 ${
@@ -417,7 +417,7 @@ export default function OfferDeclinedScreen({
           <div className="w-[40%] flex items-center justify-center px-8 py-8">
             <div className="relative w-full max-w-[320px] h-[400px] rounded-[20px] overflow-hidden shadow-lg">
               <Image
-                src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
+                src="/empire-state-compressed.jpg"
                 alt="New York City skyline at twilight with Empire State Building"
                 fill
                 className={`object-cover object-center transition-all duration-700 ${

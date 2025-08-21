@@ -99,7 +99,7 @@ export default function FeedbackScreen({
           {/* City Skyline Image - Mobile and Tablet */}
           <div className="relative w-full h-40 sm:h-48 rounded-t-[20px] overflow-hidden">
             <Image
-              src="/skyline_image.jpg"
+              src="/empire-state-compressed.jpg"
               alt="City skyline with Empire State Building"
               fill
               className={`object-cover object-center transition-all duration-700 ${
@@ -141,7 +141,7 @@ export default function FeedbackScreen({
                     value={feedback}
                     onChange={(e) => setFeedback(e.target.value)}
                     placeholder="Share your thoughts..."
-                    className="w-full h-28 sm:h-32 px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-[#996EFF] focus:border-[#996EFF] transition-all duration-200"
+                    className="w-full h-28 sm:h-32 px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-700 border-2 border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-[#996EFF] focus:border-[#996EFF] transition-all duration-200"
                     maxLength={500}
                   />
                   <div className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 text-xs text-gray-400">
@@ -203,7 +203,7 @@ export default function FeedbackScreen({
                     value={feedback}
                     onChange={(e) => setFeedback(e.target.value)}
                     placeholder="Share your thoughts..."
-                    className="w-full h-32 text-base lg:text-lg px-4 py-3 border-2 border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-[#996EFF] focus:border-[#996EFF] transition-all duration-200"
+                    className="w-full h-32 text-base lg:text-lg text-gray-700 px-4 py-3 border-2 border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-[#996EFF] focus:border-[#996EFF] transition-all duration-200"
                     maxLength={500}
                   />
                   <div className="absolute bottom-3 right-3 text-sm text-gray-400">
@@ -235,7 +235,7 @@ export default function FeedbackScreen({
           <div className="w-[40%] flex items-center justify-center px-8 py-8">
             <div className="relative w-full max-w-[320px] h-[400px] rounded-[20px] overflow-hidden shadow-lg">
               <Image
-                src="/skyline_image.jpg"
+                src="/empire-state-compressed.jpg"
                 alt="City skyline with Empire State Building"
                 fill
                 className={`object-cover object-center transition-all duration-700 ${

@@ -269,44 +269,44 @@ export default function FinalCancellationScreen({
       
       {/* Modal */}
       <div
-        className={`bg-white rounded-[20px] w-full max-w-[1000px] h-auto min-h-[600px] max-h-[90vh] flex flex-row relative overflow-hidden shadow-2xl transition-all duration-500 transform ${
+        className={`bg-white rounded-[20px] w-full max-w-[320px] sm:max-w-[480px] md:max-w-[640px] lg:max-w-[1000px] h-auto min-h-[500px] sm:min-h-[550px] lg:min-h-[600px] max-h-[90vh] flex flex-col lg:flex-row relative overflow-hidden shadow-2xl transition-all duration-500 transform ${
           isVisible
             ? 'translate-y-0 scale-100 opacity-100'
             : 'translate-y-8 scale-95 opacity-0'
         }`}
       >
         {/* Header - Top border and navigation */}
-        <div className="absolute top-0 left-0 right-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
+        <div className="absolute top-0 left-0 right-0 bg-white border-b border-gray-200 px-3 sm:px-4 lg:px-6 py-3 sm:py-4 flex items-center justify-between z-10 h-12 sm:h-14 lg:h-16">
           {/* Back Button */}
           <button
             onClick={onBack}
             className="flex items-center text-gray-600 hover:text-gray-800 transition-all duration-200 hover:scale-105"
           >
-            <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            <span className="text-sm font-medium">Back</span>
+            <span className="text-xs sm:text-sm font-medium">Back</span>
           </button>
 
           {/* Center Title */}
-          <h1 className="text-lg font-semibold text-gray-800">Subscription Cancellation</h1>
+          <h1 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-800">Subscription Cancellation</h1>
 
           {/* Progress Indicator */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1.5 sm:space-x-2">
             <div className="flex space-x-1">
-              <div className="w-3 h-2 bg-green-500 rounded-sm"></div>
-              <div className="w-3 h-2 bg-green-500 rounded-sm"></div>
-              <div className="w-3 h-2 bg-gray-300 rounded-sm"></div>
+              <div className="w-2 h-2 sm:w-3 sm:h-2 bg-green-500 rounded-sm"></div>
+              <div className="w-2 h-2 sm:w-3 sm:h-2 bg-green-500 rounded-sm"></div>
+              <div className="w-2 h-2 sm:w-3 sm:h-2 bg-gray-300 rounded-sm"></div>
             </div>
-            <span className="text-sm text-gray-500">Step 3 of 3</span>
+            <span className="text-xs sm:text-sm text-gray-500">Step 3 of 3</span>
           </div>
 
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="w-6 h-6 flex items-center justify-center text-gray-600 hover:text-gray-800 transition-all duration-200"
+            className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-gray-600 hover:text-gray-800 transition-all duration-200"
           >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 16 16" fill="none">
               <path
                 d="M12 4L4 12M4 4L12 12"
                 stroke="currentColor"
@@ -318,230 +318,462 @@ export default function FinalCancellationScreen({
           </button>
         </div>
 
-        {/* Left Panel - Content (2/3 width) */}
-        <div className="w-[66.67%] flex flex-col justify-start px-12 pt-20 pb-8 overflow-y-auto">
-          <div className="space-y-6">
-            {/* Main Question */}
-            <div className="space-y-2">
-              <h2 className="text-2xl font-bold text-gray-800">
-                What's the main reason for cancelling?
-              </h2>
-              <p className="text-base text-gray-600">
-                Please take a minute to let us know why:
-              </p>
-            </div>
-
-            {/* Error Message */}
-            {showError && (
-              <div className="text-red-600 text-base font-medium">
-                To help us understand your experience, please select a reason for cancelling*
-              </div>
-            )}
-
-            {/* Validation Errors */}
-            {validationErrors.length > 0 && (
-              <div className="text-red-600 text-base font-medium space-y-1">
-                {validationErrors.map((error, index) => (
-                  <div key={index}>• {error}</div>
-                ))}
-              </div>
-            )}
-
-            {/* Reason Options */}
-            <div className="space-y-4">
-              {[
-                'Too expensive',
-                'Platform not helpful',
-                'Not enough relevant jobs',
-                'Decided not to move',
-                'Other'
-              ].map((option) => (
-                <label
-                  key={option}
-                  className="flex items-center space-x-4 cursor-pointer"
-                >
-                  <input
-                    type="radio"
-                    name="cancellationReason"
-                    value={option}
-                    checked={cancellationReason === option}
-                    onChange={() => handleRadioChange(option)}
-                    className="w-5 h-5 text-gray-600 border-gray-300 focus:ring-gray-500"
-                  />
-                  <span className="text-base font-medium text-black">{option}</span>
-                </label>
-              ))}
-            </div>
-
-            {/* Dynamic Input Fields Based on Selection */}
-            {cancellationReason === 'Too expensive' && (
-              <div className="space-y-3">
-                <p className="text-base text-black">
-                  What would be the maximum you would be willing to pay?*
-                </p>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
-                  <input
-                    type="text"
-                    value={priceInput}
-                    onChange={(e) => setPriceInput(ValidationService.sanitizeInput(e.target.value))}
-                    placeholder="0.00"
-                    className="w-full pl-8 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black"
-                  />
-                </div>
-              </div>
-            )}
-
-            {cancellationReason === 'Platform not helpful' && (
-              <div className="space-y-3">
-                <p className="text-base text-black">
-                  What can we change to make the platform more helpful?*
-                </p>
-                {platformFeedback.length > 0 && platformFeedback.length < 25 && (
-                  <p className="text-red-600 text-xs">
-                    Please enter at least 25 characters so we can understand your feedback*
-                  </p>
-                )}
-                <div className="relative">
-                  <textarea
-                    value={platformFeedback}
-                    onChange={(e) => setPlatformFeedback(ValidationService.sanitizeInput(e.target.value))}
-                    placeholder="Please share your feedback..."
-                    rows={4}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black resize-none"
-                  />
-                  <div className="absolute bottom-2 right-2 text-xs text-gray-500">
-                    Min 25 characters ({platformFeedback.length}/25)
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {cancellationReason === 'Not enough relevant jobs' && (
-              <div className="space-y-3">
-                <p className="text-base text-black">
-                  What types of jobs would be most relevant for you?*
-                </p>
-                {jobsFeedback.length > 0 && jobsFeedback.length < 25 && (
-                  <p className="text-red-600 text-xs">
-                    Please enter at least 25 characters so we can understand your feedback*
-                  </p>
-                )}
-                <div className="relative">
-                  <textarea
-                    value={jobsFeedback}
-                    onChange={(e) => setJobsFeedback(ValidationService.sanitizeInput(e.target.value))}
-                    placeholder="Please share your feedback..."
-                    rows={4}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black resize-none"
-                  />
-                  <div className="absolute bottom-2 right-2 text-xs text-gray-500">
-                    Min 25 characters ({jobsFeedback.length}/25)
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {cancellationReason === 'Decided not to move' && (
-              <div className="space-y-3">
-                <p className="text-base text-black">
-                  What changed for you to decide to not move?*
-                </p>
-                {moveFeedback.length > 0 && moveFeedback.length < 25 && (
-                  <p className="text-red-600 text-xs">
-                    Please enter at least 25 characters so we can understand your feedback*
-                  </p>
-                )}
-                <div className="relative">
-                  <textarea
-                    value={moveFeedback}
-                    onChange={(e) => setMoveFeedback(ValidationService.sanitizeInput(e.target.value))}
-                    placeholder="Please share your feedback..."
-                    rows={4}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black resize-none"
-                  />
-                  <div className="absolute bottom-2 right-2 text-xs text-gray-500">
-                    Min 25 characters ({moveFeedback.length}/25)
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {cancellationReason === 'Other' && (
-              <div className="space-y-3">
-                <p className="text-base text-black">
-                  What would have helped you the most?*
-                </p>
-                {otherFeedback.length > 0 && otherFeedback.length < 25 && (
-                  <p className="text-red-600 text-xs">
-                    Please enter at least 25 characters so we can understand your feedback*
-                  </p>
-                )}
-                <div className="relative">
-                  <textarea
-                    value={otherFeedback}
-                    onChange={(e) => setOtherFeedback(ValidationService.sanitizeInput(e.target.value))}
-                    placeholder="Please share your feedback..."
-                    rows={4}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black resize-none"
-                  />
-                  <div className="absolute bottom-2 right-2 text-xs text-gray-500">
-                    Min 25 characters ({otherFeedback.length}/25)
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Action Buttons */}
-            <div className="space-y-4 pt-4">
-              <button
-                onClick={handleGetDiscount}
-                disabled={buttonClicked === 'discount' || isSubmitting}
-                className={`w-full py-4 px-6 rounded-lg font-medium ${
-                  buttonClicked === 'discount'
-                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                    : 'bg-green-600 text-white hover:bg-green-700'
-                }`}
-              >
-                                 {variant === 'B' ? (
-                   <>
-                     Get ${discountAmount} off | $15.00 <span className="line-through">${originalPrice.toFixed(2)}</span>
-                   </>
-                 ) : (
-                   <>
-                     Get 50% off | $12.50 <span className="line-through">${originalPrice.toFixed(2)}</span>
-                   </>
-                 )}
-              </button>
-
-              <button
-                onClick={handleCompleteCancellation}
-                disabled={buttonClicked === 'cancellation' || isSubmitting}
-                className={`w-full py-4 px-6 rounded-lg font-medium ${
-                  buttonClicked === 'cancellation'
-                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              >
-                Complete cancellation
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Panel - Image (1/3 width) */}
-        <div className="w-[33.33%] flex items-center justify-center px-8 py-8">
-          <div className="relative w-full max-w-[320px] h-[400px] rounded-[20px] overflow-hidden shadow-lg">
+        {/* Mobile and Tablet Layout - Single Column */}
+        <div className="lg:hidden flex flex-col h-full">
+          {/* City Skyline Image - Mobile and Tablet */}
+          <div className="relative w-full h-40 sm:h-48 rounded-t-[20px] overflow-hidden">
             <Image
-              src="/timo-wagner-fT6-YkB0nfg-unsplash.jpg"
-              alt="New York City skyline at twilight with Empire State Building"
+              src="/empire-state-compressed.jpg"
+              alt="New York City skyline at twilight with Empire State Building prominently featured"
               fill
               className={`object-cover object-center transition-all duration-700 ${
                 isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'
               }`}
               priority
-              sizes="(max-width: 1024px) 100vw, 320px"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 50vw"
             />
+          </div>
+
+          {/* Content - Mobile and Tablet */}
+          <div className="flex-1 flex flex-col justify-start px-3 sm:px-6 pt-16 sm:pt-20 pb-4 sm:pb-6 overflow-y-auto">
+            <div className="space-y-4 sm:space-y-6">
+              {/* Main Question */}
+              <div className="space-y-2">
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800">
+                  What's the main reason for cancelling?
+                </h2>
+                <p className="text-sm sm:text-base text-gray-600">
+                  Please take a minute to let us know why:
+                </p>
+              </div>
+
+              {/* Error Message */}
+              {showError && (
+                <div className="text-red-600 text-sm sm:text-base font-medium">
+                  To help us understand your experience, please select a reason for cancelling*
+                </div>
+              )}
+
+              {/* Validation Errors */}
+              {validationErrors.length > 0 && (
+                <div className="text-red-600 text-sm sm:text-base font-medium space-y-1">
+                  {validationErrors.map((error, index) => (
+                    <div key={index}>• {error}</div>
+                  ))}
+                </div>
+              )}
+
+              {/* Reason Options */}
+              <div className="space-y-3 sm:space-y-4">
+                {[
+                  'Too expensive',
+                  'Platform not helpful',
+                  'Not enough relevant jobs',
+                  'Decided not to move',
+                  'Other'
+                ].map((option) => (
+                  <label
+                    key={option}
+                    className="flex items-center space-x-3 sm:space-x-4 cursor-pointer"
+                  >
+                    <input
+                      type="radio"
+                      name="cancellationReason"
+                      value={option}
+                      checked={cancellationReason === option}
+                      onChange={() => handleRadioChange(option)}
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 border-gray-300 focus:ring-gray-500"
+                    />
+                    <span className="text-sm sm:text-base font-medium text-black">{option}</span>
+                  </label>
+                ))}
+              </div>
+
+              {/* Dynamic Input Fields Based on Selection */}
+              {cancellationReason === 'Too expensive' && (
+                <div className="space-y-3">
+                  <p className="text-sm sm:text-base text-black">
+                    What would be the maximum you would be willing to pay?*
+                  </p>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                    <input
+                      type="text"
+                      value={priceInput}
+                      onChange={(e) => setPriceInput(ValidationService.sanitizeInput(e.target.value))}
+                      placeholder="0.00"
+                      className="w-full pl-8 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {cancellationReason === 'Platform not helpful' && (
+                <div className="space-y-3">
+                  <p className="text-sm sm:text-base text-black">
+                    What can we change to make the platform more helpful?*
+                  </p>
+                  {platformFeedback.length > 0 && platformFeedback.length < 25 && (
+                    <p className="text-red-600 text-xs">
+                      Please enter at least 25 characters so we can understand your feedback*
+                    </p>
+                  )}
+                  <div className="relative">
+                    <textarea
+                      value={platformFeedback}
+                      onChange={(e) => setPlatformFeedback(ValidationService.sanitizeInput(e.target.value))}
+                      placeholder="Please share your feedback..."
+                      rows={4}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black resize-none"
+                    />
+                    <div className="absolute bottom-2 right-2 text-xs text-gray-500">
+                      Min 25 characters ({platformFeedback.length}/25)
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {cancellationReason === 'Not enough relevant jobs' && (
+                <div className="space-y-3">
+                  <p className="text-sm sm:text-base text-black">
+                    What types of jobs would be most relevant for you?*
+                  </p>
+                  {jobsFeedback.length > 0 && jobsFeedback.length < 25 && (
+                    <p className="text-red-600 text-xs">
+                      Please enter at least 25 characters so we can understand your feedback*
+                    </p>
+                  )}
+                  <div className="relative">
+                    <textarea
+                      value={jobsFeedback}
+                      onChange={(e) => setJobsFeedback(ValidationService.sanitizeInput(e.target.value))}
+                      placeholder="Please share your feedback..."
+                      rows={4}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black resize-none"
+                    />
+                    <div className="absolute bottom-2 right-2 text-xs text-gray-500">
+                      Min 25 characters ({jobsFeedback.length}/25)
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {cancellationReason === 'Decided not to move' && (
+                <div className="space-y-3">
+                  <p className="text-sm sm:text-base text-black">
+                    What changed for you to decide to not move?*
+                  </p>
+                  {moveFeedback.length > 0 && moveFeedback.length < 25 && (
+                    <p className="text-red-600 text-xs">
+                      Please enter at least 25 characters so we can understand your feedback*
+                    </p>
+                  )}
+                  <div className="relative">
+                    <textarea
+                      value={moveFeedback}
+                      onChange={(e) => setMoveFeedback(ValidationService.sanitizeInput(e.target.value))}
+                      placeholder="Please share your feedback..."
+                      rows={4}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black resize-none"
+                    />
+                    <div className="absolute bottom-2 right-2 text-xs text-gray-500">
+                      Min 25 characters ({moveFeedback.length}/25)
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {cancellationReason === 'Other' && (
+                <div className="space-y-3">
+                  <p className="text-sm sm:text-base text-black">
+                    What would have helped you the most?*
+                  </p>
+                  {otherFeedback.length > 0 && otherFeedback.length < 25 && (
+                    <p className="text-red-600 text-xs">
+                      Please enter at least 25 characters so we can understand your feedback*
+                    </p>
+                  )}
+                  <div className="relative">
+                    <textarea
+                      value={otherFeedback}
+                      onChange={(e) => setOtherFeedback(ValidationService.sanitizeInput(e.target.value))}
+                      placeholder="Please share your feedback..."
+                      rows={4}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black resize-none"
+                    />
+                    <div className="absolute bottom-2 right-2 text-xs text-gray-500">
+                      Min 25 characters ({otherFeedback.length}/25)
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="space-y-3 sm:space-y-4 pt-4">
+                <button
+                  onClick={handleGetDiscount}
+                  disabled={buttonClicked === 'discount' || isSubmitting}
+                  className={`w-full py-3 sm:py-4 px-4 sm:px-6 rounded-lg font-medium text-sm sm:text-base ${
+                    buttonClicked === 'discount'
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'bg-green-600 text-white hover:bg-green-700'
+                  }`}
+                >
+                  {variant === 'B' ? (
+                    <>
+                      Get ${discountAmount} off | $15.00 <span className="line-through">${originalPrice.toFixed(2)}</span>
+                    </>
+                  ) : (
+                    <>
+                      Get 50% off | $12.50 <span className="line-through">${originalPrice.toFixed(2)}</span>
+                    </>
+                  )}
+                </button>
+
+                <button
+                  onClick={handleCompleteCancellation}
+                  disabled={buttonClicked === 'cancellation' || isSubmitting}
+                  className={`w-full py-3 sm:py-4 px-4 sm:px-6 rounded-lg font-medium text-sm sm:text-base ${
+                    buttonClicked === 'cancellation'
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                >
+                  Complete cancellation
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Layout - Two Columns */}
+        <div className="hidden lg:flex flex-1">
+          {/* Left Panel - Content (2/3 width) */}
+          <div className="w-[66.67%] flex flex-col justify-start px-12 pt-20 pb-8 overflow-y-auto">
+            <div className="space-y-6">
+              {/* Main Question */}
+              <div className="space-y-2">
+                <h2 className="text-2xl font-bold text-gray-800">
+                  What's the main reason for cancelling?
+                </h2>
+                <p className="text-base text-gray-600">
+                  Please take a minute to let us know why:
+                </p>
+              </div>
+
+              {/* Error Message */}
+              {showError && (
+                <div className="text-red-600 text-base font-medium">
+                  To help us understand your experience, please select a reason for cancelling*
+                </div>
+              )}
+
+              {/* Validation Errors */}
+              {validationErrors.length > 0 && (
+                <div className="text-red-600 text-base font-medium space-y-1">
+                  {validationErrors.map((error, index) => (
+                    <div key={index}>• {error}</div>
+                  ))}
+                </div>
+              )}
+
+              {/* Reason Options */}
+              <div className="space-y-4">
+                {[
+                  'Too expensive',
+                  'Platform not helpful',
+                  'Not enough relevant jobs',
+                  'Decided not to move',
+                  'Other'
+                ].map((option) => (
+                  <label
+                    key={option}
+                    className="flex items-center space-x-4 cursor-pointer"
+                  >
+                    <input
+                      type="radio"
+                      name="cancellationReason"
+                      value={option}
+                      checked={cancellationReason === option}
+                      onChange={() => handleRadioChange(option)}
+                      className="w-5 h-5 text-gray-600 border-gray-300 focus:ring-gray-500"
+                    />
+                    <span className="text-base font-medium text-black">{option}</span>
+                  </label>
+                ))}
+              </div>
+
+              {/* Dynamic Input Fields Based on Selection */}
+              {cancellationReason === 'Too expensive' && (
+                <div className="space-y-3">
+                  <p className="text-base text-black">
+                    What would be the maximum you would be willing to pay?*
+                  </p>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                    <input
+                      type="text"
+                      value={priceInput}
+                      onChange={(e) => setPriceInput(ValidationService.sanitizeInput(e.target.value))}
+                      placeholder="0.00"
+                      className="w-full pl-8 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {cancellationReason === 'Platform not helpful' && (
+                <div className="space-y-3">
+                  <p className="text-base text-black">
+                    What can we change to make the platform more helpful?*
+                  </p>
+                  {platformFeedback.length > 0 && platformFeedback.length < 25 && (
+                    <p className="text-red-600 text-xs">
+                      Please enter at least 25 characters so we can understand your feedback*
+                    </p>
+                  )}
+                  <div className="relative">
+                    <textarea
+                      value={platformFeedback}
+                      onChange={(e) => setPlatformFeedback(ValidationService.sanitizeInput(e.target.value))}
+                      placeholder="Please share your feedback..."
+                      rows={4}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black resize-none"
+                    />
+                    <div className="absolute bottom-2 right-2 text-xs text-gray-500">
+                      Min 25 characters ({platformFeedback.length}/25)
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {cancellationReason === 'Not enough relevant jobs' && (
+                <div className="space-y-3">
+                  <p className="text-base text-black">
+                    What types of jobs would be most relevant for you?*
+                  </p>
+                  {jobsFeedback.length > 0 && jobsFeedback.length < 25 && (
+                    <p className="text-red-600 text-xs">
+                      Please enter at least 25 characters so we can understand your feedback*
+                    </p>
+                  )}
+                  <div className="relative">
+                    <textarea
+                      value={jobsFeedback}
+                      onChange={(e) => setJobsFeedback(ValidationService.sanitizeInput(e.target.value))}
+                      placeholder="Please share your feedback..."
+                      rows={4}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black resize-none"
+                    />
+                    <div className="absolute bottom-2 right-2 text-xs text-gray-500">
+                      Min 25 characters ({jobsFeedback.length}/25)
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {cancellationReason === 'Decided not to move' && (
+                <div className="space-y-3">
+                  <p className="text-base text-black">
+                    What changed for you to decide to not move?*
+                  </p>
+                  {moveFeedback.length > 0 && moveFeedback.length < 25 && (
+                    <p className="text-red-600 text-xs">
+                      Please enter at least 25 characters so we can understand your feedback*
+                    </p>
+                  )}
+                  <div className="relative">
+                    <textarea
+                      value={moveFeedback}
+                      onChange={(e) => setMoveFeedback(ValidationService.sanitizeInput(e.target.value))}
+                      placeholder="Please share your feedback..."
+                      rows={4}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black resize-none"
+                    />
+                    <div className="absolute bottom-2 right-2 text-xs text-gray-500">
+                      Min 25 characters ({moveFeedback.length}/25)
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {cancellationReason === 'Other' && (
+                <div className="space-y-3">
+                  <p className="text-base text-black">
+                    What would have helped you the most?*
+                  </p>
+                  {otherFeedback.length > 0 && otherFeedback.length < 25 && (
+                    <p className="text-red-600 text-xs">
+                      Please enter at least 25 characters so we can understand your feedback*
+                    </p>
+                  )}
+                  <div className="relative">
+                    <textarea
+                      value={otherFeedback}
+                      onChange={(e) => setOtherFeedback(ValidationService.sanitizeInput(e.target.value))}
+                      placeholder="Please share your feedback..."
+                      rows={4}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent text-black resize-none"
+                    />
+                    <div className="absolute bottom-2 right-2 text-xs text-gray-500">
+                      Min 25 characters ({otherFeedback.length}/25)
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="space-y-4 pt-4">
+                <button
+                  onClick={handleGetDiscount}
+                  disabled={buttonClicked === 'discount' || isSubmitting}
+                  className={`w-full py-4 px-6 rounded-lg font-medium ${
+                    buttonClicked === 'discount'
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'bg-green-600 text-white hover:bg-green-700'
+                  }`}
+                >
+                  {variant === 'B' ? (
+                    <>
+                      Get ${discountAmount} off | $15.00 <span className="line-through">${originalPrice.toFixed(2)}</span>
+                    </>
+                  ) : (
+                    <>
+                      Get 50% off | $12.50 <span className="line-through">${originalPrice.toFixed(2)}</span>
+                    </>
+                  )}
+                </button>
+
+                <button
+                  onClick={handleCompleteCancellation}
+                  disabled={buttonClicked === 'cancellation' || isSubmitting}
+                  className={`w-full py-4 px-6 rounded-lg font-medium ${
+                    buttonClicked === 'cancellation'
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                >
+                  Complete cancellation
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Panel - Image (1/3 width) */}
+          <div className="w-[33.33%] h-full flex flex-col">
+            {/* Image fills entire right panel below header */}
+            <div className="relative w-full h-full rounded-r-[20px] overflow-hidden shadow-lg">
+              <Image
+                src="/empire-state-compressed.jpg"
+                alt="New York City skyline at twilight with Empire State Building prominently featured"
+                fill
+                className={`object-cover object-center transition-all duration-700 ${
+                  isVisible ? 'scale-100 opacity-100' : 'scale-110 opacity-0'
+                }`}
+                priority
+                sizes="(max-width: 1024px) 100vw, 33.33vw"
+              />
+            </div>
           </div>
         </div>
       </div>
