@@ -29,6 +29,20 @@ export default function CancellationConfirmationScreen({
     });
   };
 
+  const handleClose = () => {
+    setIsVisible(false);
+    setTimeout(() => {
+      onClose();
+    }, 300);
+  };
+
+  const handleBackToJobs = () => {
+    setIsVisible(false);
+    setTimeout(() => {
+      onBackToJobs();
+    }, 300);
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center p-2 sm:p-4 z-50">
       {/* Backdrop with fade-in animation */}
@@ -36,7 +50,7 @@ export default function CancellationConfirmationScreen({
         className={`absolute inset-0 bg-black/20 backdrop-blur-sm transition-all duration-500 ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
-        onClick={onClose}
+        onClick={handleClose}
       />
 
       {/* Modal with slide-up and scale animation */}
@@ -51,7 +65,7 @@ export default function CancellationConfirmationScreen({
         <div className="absolute top-0 left-0 right-0 bg-white border-b border-gray-200 px-3 sm:px-4 lg:px-6 py-3 sm:py-4 flex items-center justify-between z-10">
           {/* Back Button */}
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="flex items-center text-gray-600 hover:text-gray-800 transition-all duration-200 hover:scale-105"
           >
             <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -68,7 +82,7 @@ export default function CancellationConfirmationScreen({
                 <div className="w-2 h-2 sm:w-3 sm:h-2 bg-green-500 rounded-sm"></div>
                 <div className="w-2 h-2 sm:w-3 sm:h-2 bg-green-500 rounded-sm"></div>
                 <div className="w-2 h-2 sm:w-3 sm:h-2 bg-green-500 rounded-sm"></div>
-                <div className="w-2 h-2 sm:w-3 sm:h-2 bg-gray-300 rounded-sm"></div>
+                <div className="w-2 h-2 sm:w-3 sm:h-2 bg-green-500 rounded-sm"></div>
               </div>
               <span className="text-xs sm:text-sm text-gray-500 ml-1.5 sm:ml-2">Completed</span>
             </div>
@@ -76,7 +90,7 @@ export default function CancellationConfirmationScreen({
 
           {/* Close Button */}
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 flex items-center justify-center text-gray-600 hover:text-gray-800 transition-all duration-200 bg-white rounded-full shadow-sm hover:scale-110 hover:bg-gray-50"
           >
             <svg width="14" height="14" className="sm:w-4 sm:h-4 lg:w-4 lg:h-4" viewBox="0 0 16 16" fill="none">
@@ -137,7 +151,7 @@ export default function CancellationConfirmationScreen({
 
               {/* Back to Jobs Button */}
               <button
-                onClick={onBackToJobs}
+                onClick={handleBackToJobs}
                 className="w-full py-3 px-6 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
               >
                 Back to Jobs
@@ -195,7 +209,7 @@ export default function CancellationConfirmationScreen({
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}>
                 <button
-                  onClick={onBackToJobs}
+                  onClick={handleBackToJobs}
                   className="w-full py-4 px-8 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] text-lg lg:text-xl"
                 >
                   Back to Jobs
