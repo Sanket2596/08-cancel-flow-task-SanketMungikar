@@ -7,8 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "db:start": "npx supabase start",
+    "db:stop": "npx supabase stop",
     "db:reset": "npx supabase db reset --yes",
-    "db:setup": "npx supabase start --debug && npx supabase db reset --yes --debug"
+    "db:setup": "npm run db:start && npm run db:reset",
+    "db:status": "npx supabase status",
+    "db:logs": "npx supabase logs",
+    "db:migrate": "npx supabase db push",
+    "db:studio": "echo 'Supabase Studio not available in CLI. Open http://127.0.0.1:54323 in your browser'",
+    "db:test": "npm run db:setup && npm run dev"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.5",
